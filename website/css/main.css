@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+}
+
+main section h1 {
+    text-align: center;
+    font-size: 3vw;
+}
+
+main section {
+    padding-left: 5%;
+    padding-right: 5%;
+}
