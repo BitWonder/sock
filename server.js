@@ -22,7 +22,7 @@ router.get("/connected", async (ctx) => {
   }
   socket.username = username;
   rooms.set(username, socket);
-  await Deno.writeTextFile("log.txt", `${time()} User ${username} connected to websocket \n`, {append: true});
+  //await Deno.writeTextFile("log.txt", `${time()} User ${username} connected to websocket \n`, {append: true});
 
   // setup actions that take place with websocket onopen, close, message, error
 });
@@ -46,6 +46,6 @@ app.use(async (context) => {
   });
 });
 
-await Deno.writeTextFile("log.txt", `${time()} Started listening on port: ${port} \n`, {append: true});
+//await Deno.writeTextFile("log.txt", `${time()} Started listening on port: ${port} \n`, {append: true});
 console.log(`Running on http://localhost:${port}`);
 await app.listen({ port });
