@@ -22,7 +22,7 @@
     <script>
         function login() {
             const socket = new WebSocket(
-                `wss://${host}/login`,
+                `wss://${window.location.host}/login`,
             );
 
             socket.onopen = () => {
