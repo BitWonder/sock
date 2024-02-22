@@ -7,6 +7,12 @@ import * as cookie from "https://deno.land/std/http/cookie.ts";
 // put a room with a key in here that then holds the clients
 const rooms = new Map();
 
+const users = new Map();
+
+const app = new Application();
+const router = new Router();
+const port = 1027
+
 class User {
   constructor(password, rooms) {
     this.password = password
@@ -36,12 +42,6 @@ router.get("/login", async (ctx) => {
     }
   }
 })
-
-const users = new Map();
-
-const app = new Application();
-const router = new Router();
-const port = 1027
 
 app.use(router.routes());
 app.use(router.allowedMethods());
