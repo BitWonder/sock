@@ -34,11 +34,15 @@ router.get("/login", async (ctx) => {
   socket.onmessage = (message) => {
     let stuff = JSON.parse(message);
     if (correct_password(stuff.username, stuff.password)) {
-      cooky =cookie.serialize({}, {
-        name: username,
+      cooky = cookie.serialize({}, {
+        name: stuff.username,
         value: "true"
       })
       ctx.response.headers.set("Set-Cookie", cooky);
+      socket.send("true");
+    }
+    else {
+      socket.send("false")
     }
   }
 })

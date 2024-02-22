@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chats</title>
+    <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
     <main>
+        <h1>#WebsiteNameHere</h1>
         <form>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="password" autocomplete="username">
-            <label for="password">Password</label>
             <input type="password" name="password" id="password" autocomplete="current-password">
+            <label for="password">Password: </label>
+            <br>
+            <input type="text" id="username" name="username" autocomplete="username">
+            <label for="username">Username: </label>
         </form>
     </main>
 
     <script>
         const socket = new WebSocket(
-            `ws://localhost:8080/login`,
+            `ws://free-eagle-73-4my3daw0sw8r.deno.dev/login`,
         );
 
         socket.onopen = () => {
@@ -29,6 +32,8 @@
 
         socket.onmessage = (message) => {
             // change location if true
+            socket.close()
+            alert(message);
         }
     </script>
 </body>
