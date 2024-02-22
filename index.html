@@ -26,9 +26,11 @@
             );
 
             socket.onopen = () => {
+                username = document.getElementById("username").value;
+                password = document.getElementById("password").value;
                 socket.send(JSON.stringify({
-                    username: document.getElementById("username").value,
-                    password: document.getElementById("password").value
+                    username: username.toString(),
+                    password: password.toString()
                 }))
             }
 
