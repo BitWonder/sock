@@ -10,6 +10,7 @@
     <main>
         <h1>#WebsiteNameHere</h1>
         <form>
+            <input type="button" onclick="login()">
             <input type="password" name="password" id="password" autocomplete="current-password">
             <label for="password">Password: </label>
             <br>
@@ -19,21 +20,23 @@
     </main>
 
     <script>
-        const socket = new WebSocket(
-            `ws://free-eagle-73-4my3daw0sw8r.deno.dev/login`,
-        );
+        function login() {
+            const socket = new WebSocket(
+                `ws://free-eagle-73-4my3daw0sw8r.deno.dev/login`,
+            );
 
-        socket.onopen = () => {
-            socket.send(JSON.stringify({
-                username: document.getElementById("username").value,
-                password: document.getElementById("password").value
-            }))
-        }
+            socket.onopen = () => {
+                socket.send(JSON.stringify({
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value
+                }))
+            }
 
-        socket.onmessage = (message) => {
-            // change location if true
-            socket.close()
-            alert(message);
+            socket.onmessage = (message) => {
+                // change location if true
+                socket.close()
+                alert(message);
+            }
         }
     </script>
 </body>
