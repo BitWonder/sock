@@ -32,6 +32,7 @@ function correct_password(username, password) {
 router.get("/login", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = (message) => {
+    console.log("Message: " + message);
     let stuff = JSON.parse(message);
     if (correct_password(stuff.username, stuff.password)) {
       cooky = cookie.serialize({}, {
