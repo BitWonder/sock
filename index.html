@@ -10,7 +10,7 @@
     <main>
         <h1>#WebsiteNameHere</h1>
         <form>
-            <input type="button" onclick="login()">
+            <input type="button" onclick="login()" value="Login">
             <input type="password" name="password" id="password" autocomplete="current-password">
             <label for="password">Password: </label>
             <br>
@@ -22,7 +22,7 @@
     <script>
         function login() {
             const socket = new WebSocket(
-                `ws://free-eagle-73-4my3daw0sw8r.deno.dev/login`,
+                `wss://${host}/login`,
             );
 
             socket.onopen = () => {
