@@ -1,51 +1,56 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
+// cookies
+import * as cookie from "https://deno.land/std/http/cookie.ts";
+
 // put a room with a key in here that then holds the clients
 const rooms = new Map();
+
+class User {
+  constructor(password, rooms) {
+    this.password = password
+    this.rooms = rooms
+  }
+}
+
+function new_user(username, password, first_room) {
+  users.set(username, new User(password, [first_room]));
+}
+
+function correct_password(username, password) {
+  if (users.get(username).password == password) { return true }
+  return false;
+}
+
+router.get("/login", async (ctx) => {
+  const socket = await ctx.upgrade();
+  socket.onmessage = (message) => {
+    let stuff = JSON.parse(message);
+    if (correct_password(stuff.username, stuff.password)) {
+      cooky =cookie.serialize({}, {
+        name: username,
+        value: "true"
+      })
+      ctx.response.headers.set("Set-Cookie", cooky);
+    }
+  }
+})
+
+const users = new Map();
 
 const app = new Application();
 const router = new Router();
 const port = 1027
-
-function time() {
-  return `At time: ${new Date().toUTCString()} =>`;
-}
-
-// using route to upgrade to stuff
-router.get("/connected", async (ctx) => {
-  const socket = await ctx.upgrade();
-  const username = ctx.request.url.searchParams.get("username");
-  if (rooms.has(username)) {
-    socket.close(1008, `Username ${username} is already taken`);
-    return;
-  }
-  socket.username = username;
-  rooms.set(username, socket);
-  //await Deno.writeTextFile("log.txt", `${time()} User ${username} connected to websocket \n`, {append: true});
-
-  // setup actions that take place with websocket onopen, close, message, error
-});
-
-router.get("/user", async function (request) {
-  const socket = await request.upgrade();
-
-  socket.onmessage = (message) => {
-    let users = JSON.parse( Deno.readTextFile("./users.json") );
-    users.users.find(message);
-    socket.send("true");
-  }
-});
 
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (context) => {
   await context.send({
     root: `${Deno.cwd()}/`,
-    index: "website/index.html",
+    index: "./index.html",
   });
 });
 
-//await Deno.writeTextFile("log.txt", `${time()} Started listening on port: ${port} \n`, {append: true});
-console.log(`Running on http://localhost:${port}`);
+console.log("running")
 await app.listen({ port });

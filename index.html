@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chats</title>
+</head>
+<body>
+    <main>
+        <form>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="password" autocomplete="username">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" autocomplete="current-password">
+        </form>
+    </main>
+
+    <script>
+        const socket = new WebSocket(
+            `ws://localhost:8080/login`,
+        );
+
+        socket.onopen = () => {
+            socket.send(JSON.stringify({
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            }))
+        }
+
+        socket.onmessage = (message) => {
+            // change location if true
+        }
+    </script>
+</body>
+</html>
