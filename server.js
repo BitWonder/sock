@@ -33,9 +33,10 @@ function correct_password(username, password) {
 }
 
 router.post("/login", async (context) => {
-  let request = new Request(context.request);
-  const body = await request.body({type: 'json'});
-  if (!request.hasBody) {
+  let req = context.request;
+  console.log(req)
+  const body = await req.body({type: 'json'});
+  if (!req.hasBody) {
     context.response.status = 400;
     context.response.body = { message: "No data provided" };
     return;
