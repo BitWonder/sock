@@ -1,6 +1,7 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { Request } from "https://deno.land/x/oak@v13.2.5/request.ts";
+import * as cookie from "https://deno.land/std/http/cookie.ts";
 
 // cookies
 import * as cookie from "https://deno.land/std/http/cookie.ts";
@@ -49,7 +50,7 @@ router.post("/login", async (context) => {
       // Construct the cookie object
     const cookieObj = {
       name: "user_for_random_chat_room",
-      value: `{username: ${stuff.username}}`,
+      value: `{username: ${info.username}}`,
       maxAge: maxAge,
       httpOnly: true, // Only accessible through HTTP requests, not JavaScript
       path: "/", // The path on the server where the cookie is valid
