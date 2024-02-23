@@ -1,5 +1,5 @@
 // server.js
-import { Application, Router, RouterContext } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
 // cookies
 import * as cookie from "https://deno.land/std/http/cookie.ts";
@@ -14,8 +14,6 @@ const router = new Router();
 const port = 1027
 
 class User {
-  password: any;
-  rooms: any;
   constructor(password, rooms) {
     this.password = password
     this.rooms = rooms
@@ -33,7 +31,7 @@ function correct_password(username, password) {
   return false;
 }
 
-router.post("/login", async ({request, response}: RouterContext) => {
+router.post("/login", async ({request, response}) => {
   const body = await request.body({type: 'json'});
   if (!request.hasBody) {
     response.status = 400;
