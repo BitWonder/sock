@@ -23,7 +23,7 @@
     <script>
         async function login() {
 
-            let data = new ResponseData();
+            let data = new Response();
             data.href = `https://${window.location.host}/login`
             data.body = `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`
             data.method = "POST"
