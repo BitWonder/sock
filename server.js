@@ -40,13 +40,14 @@ router.post("/login", async (context) => {
   //}
   //const info = body.value;
   let info = {username: "a", password: "a"}
+  let name = JSON.stringify({username: info.username})
   //if (correct_password(info.username, info.password)) {
     const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
 
       // Construct the cookie object
     const cookieObj = {
       name: "user",
-      value: JSON.stringify({username: info.username}),
+      value: name,
       maxAge: maxAge,
       httpOnly: true, // Only accessible through HTTP requests, not JavaScript
       path: "/", // The path on the server where the cookie is valid
