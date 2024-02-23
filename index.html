@@ -31,6 +31,7 @@
             }
 
             socket.onmessage = (message) => {
+                console.log(message.data);
                 if ( message.data === document.getElementById("password").value ) {
                     localStorage.setItem("username", document.getElementById("username").value);
                     console.log(message);
@@ -38,7 +39,6 @@
                     //window.location.href = "./new.html";
                 } else {
                     alert("Bad Password!");
-                    console.log(message);
                     socket.close();
                 }
             }
