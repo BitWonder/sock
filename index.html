@@ -31,7 +31,7 @@
             }
 
             socket.onmessage = (message) => {
-                if ( message === document.getElementById("password").value ) {
+                if ( message.data === document.getElementById("password").value ) {
                     localStorage.setItem("username", document.getElementById("username").value);
                     console.log(message);
                     socket.close();
