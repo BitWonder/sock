@@ -32,10 +32,7 @@
                 },
                 redirect: "follow", // manual, *follow, error
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify({
-                    username: document.getElementById("username").value,
-                    password: document.getElementById("password").value
-                }), // body data type must match "Content-Type" header
+                body: `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`, // body data type must match "Content-Type" header
             });
 
             if (response.ok) {
