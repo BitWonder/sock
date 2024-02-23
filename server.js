@@ -40,7 +40,7 @@ router.post("/login", async (context) => {
   //}
   //const info = body.value;
   let info = {username: "a", password: "a"}
-  let name = JSON.stringify({username: info.username})
+  let name = info.username;
   //if (correct_password(info.username, info.password)) {
     const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
 
