@@ -52,11 +52,8 @@ router.post("/login", async (context) => {
       path: "/", // The path on the server where the cookie is valid
     };
 
-      // Serialize the cookie object
-    const serializedCookie = cookie.serialize(cookieObj);
-
       // Set the cookie in the response headers
-    context.response.cookie("user_for_random_chat_room", serializedCookie);
+    context.response.cookie("user_for_random_chat_room", cookieObj);
     context.response.status(200).json({ success: true });
   })// else {
     //context.response.status(401).json({ success: false, message: "Incorrect username or password" });
