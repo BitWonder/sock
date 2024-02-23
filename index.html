@@ -26,11 +26,11 @@
                 `wss://${window.location.host}/login`
             )
 
-            socket.onopen() = () => {
+            socket.onopen = () => {
                 socket.send(`${document.getElementById("username").value}`);
             }
 
-            socket.onmessage() = (message) => {
+            socket.onmessage = (message) => {
                 if ( message === document.getElementById("password").value ) {
                     localStorage.setItem("username", document.getElementById("username").value);
                     console.log(message);
