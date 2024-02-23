@@ -23,17 +23,17 @@
     <script>
         async function login() {
 
-            let response = await fetch(`https://${window.location.host}/login`, {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`, // body data type must match "Content-Type" header
-            });
+            let data = new ResponseData();
+            data.href = `https://${window.location.host}/login`
+            data.body = `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`
+            data.method = "POST"
+            data.headers = {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            };
+            
+
+            let response = await fetch(data);
 
             if (response.ok) {
                 const data = await response.json();
