@@ -28,7 +28,6 @@
             socket.onopen = () => {
                 let username = document.getElementById("username").value;
                 let password = document.getElementById("password").value;
-                alert("username: " + username + ", password: " + password)
                 console.log(JSON.stringify({
                     username: username,
                     password: password
@@ -39,7 +38,6 @@
             socket.onmessage = (message) => {
                 // change location if true
                 socket.close()
-                alert(message);
                 window.location.href = "./index.html"
             }
         }
