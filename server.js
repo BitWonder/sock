@@ -36,7 +36,7 @@ router.post("/login", async (context) => {
   let req = context.request;
   console.log(req)
   console.log(req.ip)
-  console.log(req.json())
+  console.log(req.text())
   const body = await req.body({type: 'json'});
   if (!req.hasBody) {
     context.response.status = 400;
