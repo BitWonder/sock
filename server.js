@@ -33,32 +33,31 @@ function correct_password(username, password) {
 
 router.post("/login", async (context) => {
   const { request, response } = context;
-  const body = await request.body().value;
-  const info = JSON.parse(body);
+  const body = await request.body();
+  const info = body.value;
 
-    if (correct_password(info.username, info.password)) {
-      const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
+  if (correct_password(info.username, info.password)) {
+    const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
 
       // Construct the cookie object
-      const cookieObj = {
-        name: "user_for_random_chat_room",
-        value: `{username: ${stuff.username}}`,
-        maxAge: maxAge,
-        httpOnly: true, // Only accessible through HTTP requests, not JavaScript
-        path: "/", // The path on the server where the cookie is valid
-      };
+    const cookieObj = {
+      name: "user_for_random_chat_room",
+      value: `{username: ${stuff.username}}`,
+      maxAge: maxAge,
+      httpOnly: true, // Only accessible through HTTP requests, not JavaScript
+      path: "/", // The path on the server where the cookie is valid
+    };
 
       // Serialize the cookie object
-      const serializedCookie = cookie.serialize(cookieObj);
+    const serializedCookie = cookie.serialize(cookieObj);
 
       // Set the cookie in the response headers
-      response.cookie("user_for_random_chat_room", serializedCookie);
-      response.status(200).json({ success: true });
-    } else {
-      response.status(401).json({ success: false, message: "Incorrect username or password" });
+    response.cookie("user_for_random_chat_room", serializedCookie);
+    response.status(200).json({ success: true });
+  } else {
+    response.status(401).json({ success: false, message: "Incorrect username or password" });
   }
-  }
-)
+});
 
 router.get("/signup", async (ctx) => {
   const socket = await ctx.upgrade();
