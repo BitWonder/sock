@@ -26,6 +26,7 @@ router.get("/login", async (ctx) => {
   const socket = await ctx.upgrade();
 
   socket.onmessage = (message) => {
+    console.log(message.data)
     let pass = users.get(message.data);
     socket.send(pass);
   }
