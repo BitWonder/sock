@@ -1,5 +1,6 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { Request } from "https://deno.land/x/oak@v13.2.5/request.ts";
 
 // cookies
 import * as cookie from "https://deno.land/std/http/cookie.ts";
@@ -31,7 +32,8 @@ function correct_password(username, password) {
   return false;
 }
 
-router.get("/login", async ({request, response}) => {
+router.get("/login", async ({req, response}) => {
+  let request = new Request(req);
   const body = await request.body({type: 'json'});
   if (!request.hasBody) {
     response.status = 400;
