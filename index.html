@@ -22,7 +22,7 @@
 
     <script>
         async function login() {
-            let socket = WebSocket(
+            let socket = new WebSocket(
                 `wss://${window.location.host}/login`
             )
 
