@@ -34,7 +34,8 @@ function correct_password(username, password) {
 router.post("/login", async (context) => {
   const { request, response } = context;
   if (!request.hasBody) {console.log("No Body!!!!!!!!!!!!!!!!!! Aughherhfiubsdfui")} else {console.log("Has body :)")}
-  const body = await request.body.value;
+  const body = await request.body().value;
+  console.log(body);
   const info = body;
 
   if (correct_password(info.username, info.password)) {
