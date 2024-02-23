@@ -25,14 +25,13 @@
 
             let data = new Response();
             let url = `https://${window.location.host}/login`;
-            data.href = url;
             let message = `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`;
             data.body = message;
             data.method = "POST"
             data.headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
             
 
-            let response = await fetch(data);
+            let response = await fetch(url, data);
 
             if (response.ok) {
                 const data = await response.json();
