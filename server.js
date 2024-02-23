@@ -1,6 +1,6 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
-import { Request } from "https://deno.land/x/oak@v13.2.5/request.ts";
+import { Request } from "https://deno.land/x/oak@v14.0.0/request.ts";
 import * as cookie from "https://deno.land/std/http/cookie.ts";
 
 // put a room with a key in here that then holds the clients
