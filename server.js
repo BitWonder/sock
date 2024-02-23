@@ -33,6 +33,7 @@ function correct_password(username, password) {
 
 router.post("/login", async (context) => {
   const { request, response } = context;
+  console.log("request: " + request)
   const body = await request.body().value;
   const info = body;
 
