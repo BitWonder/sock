@@ -22,17 +22,12 @@ function new_user(username, password) {
   users.set(username, new User(password, []));
 }
 
-function correct_password(username, password) {
-  if ( users.has(username) ) {
-    if (users.get(username).password == password) { return true }
-  }
-  return false;
-}
+router.get("/login", async (ctx) => {
+  const socket = await ctx.upgrade();
 
-router.get("/login/:username", (ctx) => {
-  console.log("login!");
-  let username = ctx.request.url.searchParams.get('username');
-  return new Response(`${username}`)
+  socket.onmessage = (message) => {
+    socket.send(`${users.get(message)}`);
+  }
 })
 
 router.get("/signup", async (ctx) => {

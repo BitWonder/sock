@@ -22,9 +22,25 @@
 
     <script>
         async function login() {
-            const textResponse = await fetch(`https://${window.location.host}/login/:${document.getElementById("username").value}`);
-            const textData = await textResponse.text();
-            console.log(textData);
+            let socket = WebSocket(
+                `wss://${window.location.host}/login`
+            )
+
+            socket.onload() = () => {
+                socket.send(`${document.getElementById("username").value}`);
+            }
+
+            socket.onmessage() = (message) => {
+                if ( message === document.getElementById("password").value ) {
+                    localStorage.setItem("username", document.getElementById("username").value);
+                    console.log(message);
+                    socket.close();
+                    //window.location.href = "./new.html";
+                } else {
+                    alert("Bad Password!");
+                    socket.close();
+                }
+            }
         }
     </script>
 </body>
