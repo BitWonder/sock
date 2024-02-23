@@ -1,6 +1,5 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
-import { Request } from "https://deno.land/x/oak@v14.0.0/request.ts";
 import * as cookie from "https://deno.land/std/http/cookie.ts";
 
 // put a room with a key in here that then holds the clients
@@ -31,17 +30,17 @@ function correct_password(username, password) {
 }
 
 router.post("/login", async (context) => {
-  let req = context.request;
-  console.log(req)
-  const body = await req.body({type: 'json'});
-  if (!req.hasBody) {
-    context.response.status = 400;
-    context.response.body = { message: "No data provided" };
-    return;
-  }
-  const info = body.value;
+  //let req = context.request;
+  //console.log(req)
+  //const body = await req.body({type: 'json'});
+  //if (!req.hasBody) {
+    //context.response.status = 400;
+    //context.response.body = { message: "No data provided" };
+    //return;
+  //}
+  //const info = body.value;
 
-  if (correct_password(info.username, info.password)) {
+  //if (correct_password(info.username, info.password)) {
     const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
 
       // Construct the cookie object
@@ -59,10 +58,10 @@ router.post("/login", async (context) => {
       // Set the cookie in the response headers
     context.response.cookie("user_for_random_chat_room", serializedCookie);
     context.response.status(200).json({ success: true });
-  } else {
-    context.response.status(401).json({ success: false, message: "Incorrect username or password" });
-  }
-});
+  })// else {
+    //context.response.status(401).json({ success: false, message: "Incorrect username or password" });
+  //}
+//});
 
 router.get("/signup", async (ctx) => {
   const socket = await ctx.upgrade();
