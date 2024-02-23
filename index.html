@@ -24,13 +24,12 @@
         async function login() {
 
             let data = new Response();
-            data.href = `https://${window.location.host}/login`
-            data.body = `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`
+            let url = `https://${window.location.host}/login`;
+            data.href = url;
+            let message = `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`;
+            data.body = message;
             data.method = "POST"
-            data.headers = {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            };
+            data.headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
             
 
             let response = await fetch(data);
