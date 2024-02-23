@@ -29,7 +29,8 @@ function correct_password(username, password) {
   return false;
 }
 
-router.get("/login/:username", () => {
+router.get("/login/:username", (ctx) => {
+  let username = ctx.request.url.searchParams.get('username');
   return new Response(`${username}`)
 })
 
