@@ -54,7 +54,7 @@ router.post("/login", async (context) => {
     };
 
       // Set the cookie in the response headers
-      const header = new Headers();
+      const header = new Headers().set("Content-Type", "text/xml");
       cookie.setCookie(header, cookieObj)
   })// else {
     //context.response.status(401).json({ success: false, message: "Incorrect username or password" });
