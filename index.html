@@ -33,7 +33,7 @@
                     username: username,
                     password: password
                 }))
-                socket.send(`{"username": ${username}, "password": ${password}}`);
+                socket.send(`{"username": "${username}", "password": "${password}"}`);
             }
 
             socket.onmessage = (message) => {
