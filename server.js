@@ -32,7 +32,7 @@ function correct_password(username, password) {
   return false;
 }
 
-router.get("/login", async ({req, response}) => {
+router.post("/login", async ({req, response}) => {
   let request = new Request(req);
   const body = await request.body({type: 'json'});
   if (!request.hasBody) {
