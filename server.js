@@ -53,9 +53,9 @@ router.post("/login", async (context) => {
 
       // Set the cookie in the response headers
     context.response.cookie("user_for_random_chat_room", serializedCookie);
-    context.response..status(200).json({ success: true });
+    context.response.status(200).json({ success: true });
   } else {
-    context.response..status(401).json({ success: false, message: "Incorrect username or password" });
+    context.response.status(401).json({ success: false, message: "Incorrect username or password" });
   }
 });
 
