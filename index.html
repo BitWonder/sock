@@ -33,10 +33,7 @@
                     username: username,
                     password: password
                 }))
-                socket.send(JSON.stringify({
-                    username: username,
-                    password: password
-                }))
+                socket.send(`{"username": ${username}, "password": ${password}}`);
             }
 
             socket.onmessage = (message) => {
