@@ -32,12 +32,12 @@ function correct_password(username, password) {
   return false;
 }
 
-router.post("/login", async ({req, response}) => {
-  let request = new Request(req);
+router.post("/login", async (context) => {
+  let request = new Request(context.request);
   const body = await request.body({type: 'json'});
   if (!request.hasBody) {
-    response.status = 400;
-    response.body = { message: "No data provided" };
+    context.response.status = 400;
+    context.response.body = { message: "No data provided" };
     return;
   }
   const info = body.value;
@@ -58,10 +58,10 @@ router.post("/login", async ({req, response}) => {
     const serializedCookie = cookie.serialize(cookieObj);
 
       // Set the cookie in the response headers
-    response.cookie("user_for_random_chat_room", serializedCookie);
-    response.status(200).json({ success: true });
+    context.response.cookie("user_for_random_chat_room", serializedCookie);
+    context.response.status(200).json({ success: true });
   } else {
-    response.status(401).json({ success: false, message: "Incorrect username or password" });
+    context.response.status(401).json({ success: false, message: "Incorrect username or password" });
   }
 });
 
