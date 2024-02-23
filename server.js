@@ -31,7 +31,7 @@ function correct_password(username, password) {
   return false;
 }
 
-router.get("/login", async (request, response) => {
+router.post("/login", async (request, response) => {
   const info = JSON.parse(request.body.data);
     if (correct_password(info.username, info.password)) {
       const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
@@ -49,7 +49,7 @@ router.get("/login", async (request, response) => {
       const serializedCookie = cookie.serialize(cookieObj);
 
       // Set the cookie in the response headers
-      response.cookie("user_for_random_chat_room", info.username, { maxAge: maxAge, httpOnly: true });
+      response.cookie("user_for_random_chat_room", serializedCookie);
       response.status(200).json({ success: true });
     } else {
       response.status(401).json({ success: false, message: "Incorrect username or password" });
