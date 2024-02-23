@@ -46,7 +46,7 @@ router.post("/login", async (context) => {
       // Construct the cookie object
     const cookieObj = {
       name: "user_for_random_chat_room",
-      value: `{username: ${info.username}}`,
+      value: JSON.stringify({username: info.username}),
       maxAge: maxAge,
       httpOnly: true, // Only accessible through HTTP requests, not JavaScript
       path: "/", // The path on the server where the cookie is valid
