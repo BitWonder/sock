@@ -20,12 +20,14 @@ class User {
   }
 }
 
-function new_user(username, password, first_room) {
-  users.set(username, new User(password, [first_room]));
+function new_user(username, password) {
+  users.set(username, new User(password, []));
 }
 
 function correct_password(username, password) {
-  if (users.get(username).password == password) { return true }
+  if ( users.has(username) ) {
+    if (users.get(username).password == password) { return true }
+  }
   return false;
 }
 
@@ -45,6 +47,16 @@ router.get("/login", async (ctx) => {
     else {
       socket.send("false")
     }
+  }
+})
+
+router.get("/signup", async (ctx) => {
+  const socket = await ctx.upgrade();
+  socket.onmessage = (message) => {
+    console.log("Message: " + message.data);
+    let stuff = JSON.parse(message.data);
+    new_user(stuff.username, stuff.password);
+    socket.send("true")
   }
 })
 

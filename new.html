@@ -4,8 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
+    <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
-    
+    <main>
+        <h1>Signup!</h1>
+        <form>
+            <input type="button" onclick="login()" value="Signup">
+            <input type="password" name="password" id="password" autocomplete="current-password">
+            <label for="password">Password: </label>
+            <br>
+            <input type="text" id="username" name="username" autocomplete="username">
+            <label for="username">Username: </label>
+        </form>
+    </main>
+
+    <script>
+        function login() {
+            const socket = new WebSocket(
+                `wss://${window.location.host}/signup`,
+            );
+
+            socket.onopen = () => {
+                let username = document.getElementById("username").value;
+                let password = document.getElementById("password").value;
+                alert("username: " + username + ", password: " + password)
+                console.log(JSON.stringify({
+                    username: username,
+                    password: password
+                }))
+                socket.send(`{"username": "${username}", "password": "${password}"}`);
+            }
+
+            socket.onmessage = (message) => {
+                // change location if true
+                socket.close()
+                alert(message);
+                window.location.href = "./index.html"
+            }
+        }
+    </script>
 </body>
 </html>
