@@ -55,7 +55,7 @@ router.post("/login", async (context) => {
     console.log(cookieObj);
 
       // Set the cookie in the response headers
-      let header = new Headers().get("Set-Cookie");
+      let header = new Headers();
       setCookie(header, cookieObj)
       console.log("sent!");
   })// else {
