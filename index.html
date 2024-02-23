@@ -22,7 +22,7 @@
 
     <script>
         async function login() {
-            const textResponse = await fetch(`https://${window.location.host}/login/${document.getElementById("username").value}`);
+            const textResponse = await fetch(`https://${window.location.host}/login/:${document.getElementById("username").value}`);
             const textData = await textResponse.text();
             console.log(textData);
         }
