@@ -33,7 +33,7 @@ function correct_password(username, password) {
 }
 
 router.post("/login", async (context) => {
-  let req = context.request;
+  let req = context.request.Request;
   console.log(req)
   const body = await req.body({type: 'json'});
   if (!req.hasBody) {
