@@ -22,14 +22,19 @@
 
     <script>
         async function login() {
-
-            let data = new Response();
             let url = `https://${window.location.host}/login`;
-            let message = `{ username: ${document.getElementById("username").value}, password: ${document.getElementById("password").value}}`;
-            data.body = message;
-            data.method = "POST"
-            data.headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
-            
+            let message = {
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            };
+            let data = {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            };
 
             let response = await fetch(url, data);
 
