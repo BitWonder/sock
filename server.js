@@ -30,6 +30,7 @@ function correct_password(username, password) {
 }
 
 router.get("/login/:username", (ctx) => {
+  console.log("login!");
   let username = ctx.request.url.searchParams.get('username');
   return new Response(`${username}`)
 })
