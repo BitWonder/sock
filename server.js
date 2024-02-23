@@ -3,9 +3,6 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { Request } from "https://deno.land/x/oak@v13.2.5/request.ts";
 import * as cookie from "https://deno.land/std/http/cookie.ts";
 
-// cookies
-import * as cookie from "https://deno.land/std/http/cookie.ts";
-
 // put a room with a key in here that then holds the clients
 const rooms = new Map();
 
