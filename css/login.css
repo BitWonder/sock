@@ -20,6 +20,7 @@ body {
 
 main {
     place-self: center;
+    width: fit-content;
 }
 
 main h1 {
@@ -77,6 +78,16 @@ main form input[type="button"] {
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
+}
+
+main form input[type="button"]:hover {
+    font-size: large;
+    border: 1px solid var(--accent-color);
+}
+
+main form input[type="button"]:focus {
+    font-size: large;
+    border: var(--normal-radius) solid var(--accent-color);
 }
 
 /* the login thing */
