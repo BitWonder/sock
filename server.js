@@ -52,6 +52,7 @@ router.post("/login", async (context) => {
       httpOnly: true, // Only accessible through HTTP requests, not JavaScript
       path: "/", // The path on the server where the cookie is valid
     };
+    console.log(cookieObj);
 
       // Set the cookie in the response headers
       const header = new Headers().set("Content-Type", "text/xml");
