@@ -31,12 +31,9 @@ function correct_password(username, password) {
   return false;
 }
 
-router.get("/login", async (ctx) => {
-  const socket = await ctx.upgrade();
-  socket.onmessage = (message) => {
-    console.log("Message: " + message.data);
-    let stuff = JSON.parse(message.data);
-    if (correct_password(stuff.username, stuff.password)) {
+router.get("/login", async (request, response) => {
+  const info = JSON.parse(request.body.data);
+    if (correct_password(info.username, info.password)) {
       const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
 
       // Construct the cookie object
@@ -52,16 +49,13 @@ router.get("/login", async (ctx) => {
       const serializedCookie = cookie.serialize(cookieObj);
 
       // Set the cookie in the response headers
-      ctx.response.headers.set("Set-Cookie", serializedCookie);
-
-      // Send response
-      socket.send("true");
-    }
-    else {
-      socket.send("false")
-    }
+      response.cookie("user_for_random_chat_room", info.username, { maxAge: maxAge, httpOnly: true });
+      response.status(200).json({ success: true });
+    } else {
+      response.status(401).json({ success: false, message: "Incorrect username or password" });
   }
-})
+  }
+)
 
 router.get("/signup", async (ctx) => {
   const socket = await ctx.upgrade();

@@ -21,27 +21,36 @@
     </main>
 
     <script>
-        function login() {
-            const socket = new WebSocket(
-                `wss://${window.location.host}/login`,
-            );
+        async function login() {
 
-            socket.onopen = () => {
-                let username = document.getElementById("username").value;
-                let password = document.getElementById("password").value;
-                alert("username: " + username + ", password: " + password)
-                console.log(JSON.stringify({
-                    username: username,
-                    password: password
-                }))
-                socket.send(`{"username": "${username}", "password": "${password}"}`);
-            }
+            let response = await fetch(`https://${window.location.host}/login`, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                  "Content-Type": "application/json",
+                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify({
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value
+                }), // body data type must match "Content-Type" header
+            });
 
-            socket.onmessage = (message) => {
-                // change location if true
-                socket.close()
-                alert(message);
-                window.location.href = "./rooms.html"
+            if (response.ok) {
+                const data = await response.json();
+                // Assuming the server sends a response indicating success or failure
+                if (data.success) {
+                    // Redirect to rooms page upon successful login
+                    window.location.href = "./rooms.html";
+                } else {
+                    alert("Login failed. Please check your credentials.");
+                }
+            } else {
+                alert("Failed to login. Please try again later.");
             }
         }
     </script>
