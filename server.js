@@ -37,11 +37,24 @@ router.get("/login", async (ctx) => {
     console.log("Message: " + message.data);
     let stuff = JSON.parse(message.data);
     if (correct_password(stuff.username, stuff.password)) {
-      cooky = cookie.serialize({}, {
-        name: stuff.username,
-        value: "true"
-      })
-      ctx.response.headers.set("Set-Cookie", cooky);
+      const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
+
+      // Construct the cookie object
+      const cookieObj = {
+        name: "user_for_random_chat_room",
+        value: `{username: ${stuff.username}}`,
+        maxAge: maxAge,
+        httpOnly: true, // Only accessible through HTTP requests, not JavaScript
+        path: "/", // The path on the server where the cookie is valid
+      };
+
+      // Serialize the cookie object
+      const serializedCookie = cookie.serialize(cookieObj);
+
+      // Set the cookie in the response headers
+      ctx.response.headers.set("Set-Cookie", serializedCookie);
+
+      // Send response
       socket.send("true");
     }
     else {
