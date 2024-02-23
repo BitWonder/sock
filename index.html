@@ -26,7 +26,7 @@
                 `wss://${window.location.host}/login`
             )
 
-            socket.onload() = () => {
+            socket.onopen() = () => {
                 socket.send(`${document.getElementById("username").value}`);
             }
 
