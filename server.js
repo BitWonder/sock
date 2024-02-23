@@ -45,7 +45,7 @@ router.post("/login", async (context) => {
     const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
 
       // Construct the cookie object
-    const cookieObj = {
+    let cookieObj = {
       name: "user",
       value: name,
       maxAge: maxAge,
@@ -55,8 +55,8 @@ router.post("/login", async (context) => {
     console.log(cookieObj);
 
       // Set the cookie in the response headers
-      const header = new Headers().get("Set-Cookie");
-      cookie.setCookie(header, cookieObj)
+      let header = new Headers().get("Set-Cookie");
+      setCookie(header, cookieObj)
       console.log("sent!");
   })// else {
     //context.response.status(401).json({ success: false, message: "Incorrect username or password" });
