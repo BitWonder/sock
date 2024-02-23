@@ -29,7 +29,7 @@ function correct_password(username, password) {
   return false;
 }
 
-router.post("/login/:username", () => {
+router.get("/login/:username", () => {
   return new Response(`${username}`)
 })
 
