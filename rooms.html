@@ -8,34 +8,7 @@
 <body>
     <header id="welcome"></header>
     <script>
-        // Function to retrieve the username from the cookie
-        function getUsernameFromCookie(cookieName) {
-            // Split the document.cookie string into individual cookies
-            const cookies = document.cookie.split(';');
-            
-            // Loop through each cookie
-            for (let cookie of cookies) {
-                // Trim any leading or trailing whitespace
-                cookie = cookie.trim();
-                
-                // Check if this cookie starts with the name we're looking for
-                if (cookie.startsWith(cookieName + '=')) {
-                    // Get the value of the cookie (substring after the '=' sign)
-                    const cookieValue = cookie.substring(cookieName.length + 1);
-                    
-                    // Parse the cookie value (assuming it's in JSON format)
-                    const parsedCookie = JSON.parse(cookieValue);
-                    
-                    // Return the username from the parsed cookie object
-                    return parsedCookie.username;
-                }
-            }
-            
-            // If the cookie wasn't found, return null
-            return null;
-        }
-
-        document.getElementById("welcome").innerText = "Welcome" + getUsernameFromCookie("user_for_random_chat_room");
+        document.getElementById("welcome").innerText = "Welcome " + localStorage.getItem("username") + "!";
     </script>
 </body>
 </html>
