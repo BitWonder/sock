@@ -22,34 +22,9 @@
 
     <script>
         async function login() {
-            let url = `https://${window.location.host}/login`;
-            let message = {
-                username: document.getElementById("username").value,
-                password: document.getElementById("password").value
-            };
-            let data = {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(message)
-            };
-
-            let response = await fetch(url, data);
-
-            if (response.ok) {
-                const data = await response.json();
-                // Assuming the server sends a response indicating success or failure
-                if (data.success) {
-                    // Redirect to rooms page upon successful login
-                    window.location.href = "./rooms.html";
-                } else {
-                    alert("Login failed. Please check your credentials.");
-                }
-            } else {
-                alert("Failed to login. Please try again later.");
-            }
+            const textResponse = await fetch(`https://${window.location.host}/login/${document.getElementById("username").value}`);
+            const textData = await textResponse.text();
+            console.log(textData);
         }
     </script>
 </body>

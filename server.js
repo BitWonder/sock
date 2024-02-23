@@ -1,6 +1,6 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
-import { setCookie } from "https://deno.land/std@0.217.0/http/cookie.ts";
+import XMLHttpRequest from "https://deno.land/x/xmlhttprequest_deno@v0.0.2/mod.js";
 
 // put a room with a key in here that then holds the clients
 const rooms = new Map();
@@ -29,39 +29,9 @@ function correct_password(username, password) {
   return false;
 }
 
-router.post("/login", async (context) => {
-  //let req = context.request;
-  //console.log(req)
-  //const body = await req.body({type: 'json'});
-  //if (!req.hasBody) {
-    //context.response.status = 400;
-    //context.response.body = { message: "No data provided" };
-    //return;
-  //}
-  //const info = body.value;
-  let info = {username: "a", password: "a"}
-  let name = info.username;
-  //if (correct_password(info.username, info.password)) {
-    const maxAge = 3600; // Max age of the cookie in seconds (e.g., 1 hour)
-
-      // Construct the cookie object
-    let cookieObj = {
-      name: "user",
-      value: name,
-      maxAge: maxAge,
-      httpOnly: true, // Only accessible through HTTP requests, not JavaScript
-      path: "/", // The path on the server where the cookie is valid
-    };
-    console.log(cookieObj);
-
-      // Set the cookie in the response headers
-      let header = new Headers();
-      setCookie(header, cookieObj)
-      console.log("sent!");
-  })// else {
-    //context.response.status(401).json({ success: false, message: "Incorrect username or password" });
-  //}
-//});
+router.post("/login/:username", async (context) => {
+  return new Response(`${username}`)
+})
 
 router.get("/signup", async (ctx) => {
   const socket = await ctx.upgrade();
