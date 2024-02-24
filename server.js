@@ -27,6 +27,7 @@ router.get("/login", async (ctx) => {
   socket.onmessage = (message) => {
     let pass = users.get(message.data).password;
     socket.send(pass);
+    console.log(users);
   }
 })
 
@@ -37,6 +38,7 @@ router.get("/signup", async (ctx) => {
     let stuff = JSON.parse(message.data);
     new_user(stuff.username, stuff.password);
     socket.send("true")
+    console.log(users);
   }
 })
 
@@ -46,6 +48,7 @@ router.get("/rooms", async (ctx) => {
     let rooms = JSON.stringify(users.get(message.data).rooms);
     console.log("Room request from: " + message.data + "\n sending: " + rooms)
     socket.send(rooms);
+    console.log(users);
   }
 })
 
@@ -65,6 +68,7 @@ router.get("/new_room", async (ctx) => {
       rooms_of_user_list.push(make.room)
       users.set(make.username, new User(password, rooms_of_user_list))
       socket.send("Room Made!");
+      console.log(users);
     }
   }
 })
@@ -84,6 +88,7 @@ router.get("/join_room", async (ctx) => {
       rooms_of_user_list.push(make.room)
       users.set(make.username, new User(password, rooms_of_user_list))
       socket.send("Done");
+      console.log(users);
     }
   }
 })
@@ -106,6 +111,7 @@ router.get("/chat", async (ctx) => {
         message: `Say Hello To: ${username}`
       }))
     }
+    console.log(users);
   }
 
   socket.onmessage = (message) => {
