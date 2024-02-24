@@ -55,8 +55,10 @@ router.get("/new_room", async (ctx) => {
     let make = JSON.parse(message.data);
     console.log(make);
     if (rooms.has(make.room)) {
+      console.log("Room Already Make")
       socket.send("Room Has Already Been Made!");
     } else {
+      console.log("Making Room")
       rooms.set(make.room, [])
       let password = users.get(make.username).password;
       let rooms = users.get(make.username).rooms

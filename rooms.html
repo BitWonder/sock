@@ -58,9 +58,9 @@
                 }))
             }
 
-            socket.onmessage = (message) => {
+            socket.onmessage = async (message) => {
                 alert(message.data);
-                socket.close()
+                await socket.close()
                 rooms();
             }
         }
