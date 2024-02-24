@@ -18,7 +18,7 @@ class User {
 }
 
 function new_user(username, password) {
-  database.set(username, new User(password, []));
+  database.set([username], new User(password, []));
 }
 
 router.get("/login", async (ctx) => {
@@ -26,7 +26,7 @@ router.get("/login", async (ctx) => {
   const socket = await ctx.upgrade();
 
   socket.onmessage = (message) => {
-    let pass = database.get(message.data).password;
+    let pass = database.get([message.data]).password;
     socket.send(pass);
     console.log(database);
   }
@@ -46,7 +46,7 @@ router.get("/signup", async (ctx) => {
 router.get("/rooms", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = (message) => {
-    let rooms = JSON.stringify(database.get(message.data).rooms);
+    let rooms = JSON.stringify(database.get([message.data]).rooms);
     console.log("Room request from: " + message.data + "\n sending: " + rooms)
     socket.send(rooms);
     console.log(database);
@@ -64,10 +64,10 @@ router.get("/new_room", async (ctx) => {
     } else {
       console.log("Making Room")
       rooms.set(make.room, [])
-      let password = database.get(make.username).password;
-      let rooms_of_user_list = database.get(make.username).rooms
+      let password = database.get([make.username]).password;
+      let rooms_of_user_list = database.get([make.username]).rooms
       rooms_of_user_list.push(make.room)
-      database.set(make.username, new User(password, rooms_of_user_list))
+      database.set([make.username], new User(password, rooms_of_user_list))
       socket.send("Room Made!");
       console.log(database);
     }
@@ -84,10 +84,10 @@ router.get("/join_room", async (ctx) => {
       socket.send("Room Does Not Exist");
     } else {
       console.log("Making Room")
-      let password = database.get(make.username).password;
-      let rooms_of_user_list = users.get(make.username).rooms
+      let password = database.get([make.username]).password;
+      let rooms_of_user_list = users.get([make.username]).rooms
       rooms_of_user_list.push(make.room)
-      database.set(make.username, new User(password, rooms_of_user_list))
+      database.set([make.username], new User(password, rooms_of_user_list))
       socket.send("Done");
       console.log(database);
     }
