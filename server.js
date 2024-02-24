@@ -2,9 +2,9 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
 // put a room with a key in here that then holds the clients
-const rooms = new Map();
+const database = await Deno.openKv();
 
-const users = new Map();
+const rooms = new Map();
 
 const app = new Application();
 const router = new Router();
@@ -18,17 +18,17 @@ class User {
 }
 
 function new_user(username, password) {
-  users.set(username, new User(password, []));
+  database.set(username, new User(password, []));
 }
 
 router.get("/login", async (ctx) => {
-  console.log(users);
+  console.log(database);
   const socket = await ctx.upgrade();
 
   socket.onmessage = (message) => {
-    let pass = users.get(message.data).password;
+    let pass = database.get(message.data).password;
     socket.send(pass);
-    console.log(users);
+    console.log(database);
   }
 })
 
@@ -39,17 +39,17 @@ router.get("/signup", async (ctx) => {
     let stuff = JSON.parse(message.data);
     new_user(stuff.username, stuff.password);
     socket.send("true")
-    console.log(users);
+    console.log(database);
   }
 })
 
 router.get("/rooms", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = (message) => {
-    let rooms = JSON.stringify(users.get(message.data).rooms);
+    let rooms = JSON.stringify(database.get(message.data).rooms);
     console.log("Room request from: " + message.data + "\n sending: " + rooms)
     socket.send(rooms);
-    console.log(users);
+    console.log(database);
   }
 })
 
@@ -64,12 +64,12 @@ router.get("/new_room", async (ctx) => {
     } else {
       console.log("Making Room")
       rooms.set(make.room, [])
-      let password = users.get(make.username).password;
-      let rooms_of_user_list = users.get(make.username).rooms
+      let password = database.get(make.username).password;
+      let rooms_of_user_list = database.get(make.username).rooms
       rooms_of_user_list.push(make.room)
-      users.set(make.username, new User(password, rooms_of_user_list))
+      database.set(make.username, new User(password, rooms_of_user_list))
       socket.send("Room Made!");
-      console.log(users);
+      console.log(database);
     }
   }
 })
@@ -84,12 +84,12 @@ router.get("/join_room", async (ctx) => {
       socket.send("Room Does Not Exist");
     } else {
       console.log("Making Room")
-      let password = users.get(make.username).password;
+      let password = database.get(make.username).password;
       let rooms_of_user_list = users.get(make.username).rooms
       rooms_of_user_list.push(make.room)
-      users.set(make.username, new User(password, rooms_of_user_list))
+      database.set(make.username, new User(password, rooms_of_user_list))
       socket.send("Done");
-      console.log(users);
+      console.log(database);
     }
   }
 })
@@ -112,11 +112,11 @@ router.get("/chat", async (ctx) => {
         message: `Say Hello To: ${username}`
       }))
     }
-    console.log(users);
+    console.log(database);
   }
 
   socket.onmessage = (message) => {
-    console.log(users);
+    console.log(database);
     for (let client of rooms.get(room)) {
       client.socket.send(JSON.stringify({
         type: "message",
