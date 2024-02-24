@@ -45,6 +45,7 @@ router.get("/rooms", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = (message) => {
     let rooms = JSON.stringify(users.get(message.data).rooms);
+    console.log("Room request from" + message.data + "\n sending: " + rooms)
     socket.send(rooms);
   }
 })
