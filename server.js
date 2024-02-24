@@ -69,6 +69,25 @@ router.get("/new_room", async (ctx) => {
   }
 })
 
+router.get("/join_room", async (ctx) => {
+  const socket = await ctx.upgrade();
+  socket.onmessage = (message) => {
+    let make = JSON.parse(message.data);
+    console.log(make);
+    if (!rooms.has(make.room)) {
+      console.log("Could Not Find Room")
+      socket.send("Room Does Not Exist");
+    } else {
+      console.log("Making Room")
+      let password = users.get(make.username).password;
+      let rooms_of_user_list = users.get(make.username).rooms
+      rooms_of_user_list.push(make.room)
+      users.set(make.username, new User(password, rooms_of_user_list))
+      socket.send("Done");
+    }
+  }
+})
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (context) => {

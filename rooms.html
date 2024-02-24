@@ -34,6 +34,8 @@
                     rooms.forEach(room => {
                         let e = document.createElement("p");
                         e.innerText = room;
+                        e.classList.add("room")
+                        e.setAttribute("onclick", `go_to(${room})`);
                         document.getElementById("room_list").append(e);
                     })
                 }
@@ -64,6 +66,32 @@
                 document.getElementById("room_list").innerHTML = "";
                 rooms();
             }
+        }
+
+        function join_room() {
+            let input = window.prompt("Room Name");
+            let socket = new WebSocket (
+                `wss://${window.location.host}/join_room`
+            );
+
+            socket.onopen = () => {
+                socket.send(JSON.stringify({
+                    username: localStorage.getItem("username"),
+                    room: input
+                }))
+            }
+
+            socket.onmessage = async (message) => {
+                alert(message.data);
+                await socket.close()
+                document.getElementById("room_list").innerHTML = "";
+                rooms();
+            }
+        }
+
+        function go_to(room) {
+            localStorage.setItem("room", room);
+            window.location.href = "./chat.html";
         }
     </script>
 </body>
