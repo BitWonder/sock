@@ -65,6 +65,9 @@ router.get("/new_room", async (ctx) => {
       let user = await database.get([make.username]);
       let password = user.value.password;
       let rooms_of_user_list = user.value.rooms;
+      if (!rooms_of_user_list) {
+        rooms_of_user_list = []
+      }
       rooms_of_user_list.push(make.room);
       await database.set([make.username], new User(password, rooms_of_user_list));
       socket.send("Room Made!");
@@ -86,6 +89,9 @@ router.get("/join_room", async (ctx) => {
       let user = await database.get([make.username]);
       let password = user.value.password;
       let rooms_of_user_list = user.value.rooms;
+      if (!rooms_of_user_list) {
+        rooms_of_user_list = []
+      }
       rooms_of_user_list.push(make.room);
       await database.set([make.username], new User(password, rooms_of_user_list));
       socket.send("Joined Room Successfully!");
@@ -102,6 +108,9 @@ router.get("/chat", async (ctx) => {
   console.log("Room: " + room);
   socket.onopen = () => {
     let current_list = rooms.get(room);
+    if (!current_list) {
+      current_list = []
+    }
     console.log(current_list);
     current_list.push({ username: username, socket: socket });
     rooms.set("rooms", current_list);
