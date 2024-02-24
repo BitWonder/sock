@@ -1,0 +1,82 @@
+:root {
+    --accent-color: rgb(20, 134, 247);
+    --normal-radius: 5px;
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    width: 100%;
+    border-bottom: 1px solid var(--accent-color);
+    font-size: 2vw;
+
+    text-align: center;
+
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+/* ---------------- */
+
+@media screen and (max-width: 100svh) {
+    header {
+        font-size: 5vw;
+    }
+    #new {
+        font-size: 5.5vw;
+    }
+    
+    #join {
+        font-size: 5.5vw;
+    }
+}
+
+#new {
+    position: absolute;
+    bottom: 1vh;
+    left: 1vw;
+    width: calc(50% - 2vw);
+    font-size: 2vw;
+
+    border: 1px solid var(--accent-color);
+    border-radius: 25px;
+
+    transition: all .5s;
+}
+
+#new:hover {
+    left: 0.5vw;
+    width: calc(50% - 1vw);
+    border-radius: 50px;
+}
+
+#join {
+    position: absolute;
+    bottom: 1vh;
+    right: 1vw;
+    width: calc(50% - 2vw);
+    font-size: 2vw;
+
+    border: 1px solid var(--accent-color);
+    border-radius: 25px;
+
+    transition: all .5s;
+}
+
+#join:hover {
+    right: 0.5vw;
+    width: calc(50% - 1vw);
+    border-radius: 50px;
+}
+
+main {
+    width: 100%;
+    height: 80%;
+    border: 1px solid black;
+    padding: 5%;
+}

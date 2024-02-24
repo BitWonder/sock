@@ -4,10 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rooms</title>
+    <link rel="stylesheet" href="./css/rooms.css">
 </head>
 <body>
     <header id="welcome"></header>
+    <main id="room_list"></main>
+    <input type="button" value="New Room" id="new">
+    <input type="button" value="Join Room" id="join">
     <script>
+        let socket = new WebSocket (
+            `wss://${window.location.host}/rooms`
+        );
+
+        socket.onopen = () => {
+            socket.send(localStorage.getItem("username"));
+        }
+
+        socket.onmessage = (message) => {
+            let rooms = JSON.parse(message.data);
+            if (length(rooms) == 0) {
+                let e = document.createElement("p");
+                e.innerText = "You currently have no Chat Rooms avaible :(... \nTo Make a new room press New Room.\nTo Join a New Room, click New Room then input the room name";
+                document.getElementById("room_list").append(e);
+            } else {
+                rooms.forEach(room => {
+                    let e = document.createElement("p");
+                    e.innerText = room;
+                    document.getElementById("room_list").append(e);
+                })
+            }
+            socket.close();
+        }
+
         document.getElementById("welcome").innerText = "Welcome " + localStorage.getItem("username") + "!";
     </script>
 </body>

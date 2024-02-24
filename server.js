@@ -41,6 +41,14 @@ router.get("/signup", async (ctx) => {
   }
 })
 
+router.get("/rooms", async (ctx) => {
+  const socket = await ctx.upgrade();
+  socket.onmessage = (message) => {
+    let rooms = JSON.stringify(users.get(message.data).rooms);
+    socket.send(rooms);
+  }
+})
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (context) => {
