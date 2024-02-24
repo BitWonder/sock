@@ -44,7 +44,7 @@ router.get("/rooms", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = (message) => {
     let rooms = JSON.stringify(users.get(message.data).rooms);
-    console.log("Room request from" + message.data + "\n sending: " + rooms)
+    console.log("Room request from: " + message.data + "\n sending: " + rooms)
     socket.send(rooms);
   }
 })
@@ -53,6 +53,7 @@ router.get("/new_room", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = (message) => {
     let make = JSON.parse(message.data);
+    console.log(make);
     if (rooms.has(make.room)) {
       socket.send("Room Has Already Been Made!");
     } else {
