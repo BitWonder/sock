@@ -13,11 +13,13 @@
         </h1>
     </header>
 
+    <hr>
+
     <main id="chat">
 
     </main>
     
-    <input type="text" placeholder="Message" id="message"><input type="button" value="Send">
+    <input type="text" placeholder="Message" id="message"><input type="button" value="Send" onclick="send()">
 
     <script>
         alert("username: " + localStorage.getItem("username") + "\nroom: " + localStorage.getItem("room"))
@@ -31,7 +33,7 @@
         socket.onmessage = (message) => {
             let data = JSON.parse(message.data);
             let e = document.createElement("div");
-            e.innerHTML = `<h2>${data.username}</h2><p>${data.message}</p>`;
+            e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p>`;
             if (data.type == "new-user") {
                 e.classList.add("new")
             } else if (data.type == "left-user") {
