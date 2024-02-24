@@ -94,6 +94,7 @@ router.get("/chat", async (ctx) => {
   const room = ctx.request.url.searchParams.get("room");
   socket.onopen = () => {
     let current_list = rooms.get(room)
+    console.log(current_list);
     current_list.push({username: username, socket: socket});
     rooms.set("rooms", current_list)
     for (let client of rooms.get(room).socket) {
