@@ -35,7 +35,7 @@
                         let e = document.createElement("p");
                         e.innerText = room;
                         e.classList.add("room")
-                        e.setAttribute("onclick", `go_to(${room})`);
+                        e.setAttribute("onclick", `go_to("${room}"")`);
                         document.getElementById("room_list").append(e);
                     })
                 }
