@@ -6,8 +6,39 @@
     <title>Chat</title>
 </head>
 <body>
+
+    <header>
+        <h1 id="welcome">
+
+        </h1>
+    </header>
+
+    <main id="chat">
+
+    </main>
+
     <script>
         alert("username: " + localStorage.getItem("username") + "\nroom: " + localStorage.getItem("room"))
+
+        document.getElementById("welcome").innerText = `${localStorage.getItem("room")}`
+
+        const socket = new WebSocket(
+            `wss://${window.location.host}/chat?username=${localStorage.getItem("username")}&room=${localStorage.getItem("room")}}`
+        )
+
+        socket.onmessage = (message) => {
+            let data = JSON.parse(message.data);
+            let e = document.createElement("div");
+            e.innerHTML = `<h2>${data.username}</h2><p>${data.message}</p>`;
+            if (data.type == "new-user") {
+                e.classList.add("new")
+            } else if (data.type == "left-user") {
+                e.classList.add("gone")
+            } else {
+                e.classList.add("message")
+            }
+            document.getElementById("chat").append(e);
+        }
     </script>
 </body>
 </html>

@@ -88,6 +88,44 @@ router.get("/join_room", async (ctx) => {
   }
 })
 
+router.get("/chat", async (ctx) => {
+  const socket = await ctx.upgrade();
+  const username = ctx.request.url.searchParams.get("username");
+  const room = ctx.request.url.searchParams.get("room");
+  socket.onopen = () => {
+    let current_list = rooms.get(room)
+    current_list.push({username: username, socket: socket});
+    rooms.set("rooms", )
+    for (let client of rooms.get(room).socket) {
+      client.send(JSON.stringify({
+        type: "new-user",
+        username: room,
+        message: `Say Hello To: ${username}`
+      }))
+    }
+  }
+
+  socket.onmessage = (message) => {
+    for (let client of rooms.get(room).socket) {
+      client.send(JSON.stringify({
+        type: "message",
+        username: username,
+        message: message.data
+      }))
+    }
+  }
+
+  socket.onclose = () => {
+    for (let client of rooms.get(room).socket) {
+      client.send(JSON.stringify({
+        type: "left-user",
+        username: username,
+        message: `Say By To: ${username}`
+      }))
+    }
+  }
+})
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (context) => {
