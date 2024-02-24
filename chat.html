@@ -16,6 +16,8 @@
     <main id="chat">
 
     </main>
+    
+    <input type="text" placeholder="Message" id="message"><input type="button" value="Send">
 
     <script>
         alert("username: " + localStorage.getItem("username") + "\nroom: " + localStorage.getItem("room"))
@@ -38,6 +40,10 @@
                 e.classList.add("message")
             }
             document.getElementById("chat").append(e);
+        }
+
+        function send() {
+            socket.send(document.getElementById("message").value)
         }
     </script>
 </body>
