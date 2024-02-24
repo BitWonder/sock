@@ -115,6 +115,7 @@ router.get("/chat", async (ctx) => {
   }
 
   socket.onmessage = (message) => {
+    console.log(users);
     for (let client of rooms.get(room)) {
       client.socket.send(JSON.stringify({
         type: "message",
@@ -125,12 +126,14 @@ router.get("/chat", async (ctx) => {
   }
 
   socket.onclose = () => {
-    for (let client of rooms.get(room)) {
-      client.socket.send(JSON.stringify({
-        type: "left-user",
-        username: username,
-        message: `Say By To: ${username}`
-      }))
+    if (rooms.get(room).length > 0 ){
+      for (let client of rooms.get(room)) {
+        client.socket.send(JSON.stringify({
+          type: "left-user",
+          username: username,
+          message: `Say By To: ${username}`
+        }))
+      }
     }
   }
 })
