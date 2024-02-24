@@ -61,6 +61,7 @@
             socket.onmessage = async (message) => {
                 alert(message.data);
                 await socket.close()
+                document.getElementById("room_list").innerHTML = "";
                 rooms();
             }
         }
