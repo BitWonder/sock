@@ -92,6 +92,8 @@ router.get("/chat", async (ctx) => {
   const socket = await ctx.upgrade();
   const username = ctx.request.url.searchParams.get("username");
   const room = ctx.request.url.searchParams.get("room");
+  console.log("Username" + username)
+  console.log("Room: "+ room)
   socket.onopen = () => {
     let current_list = rooms.get(room)
     console.log(current_list);
