@@ -46,6 +46,7 @@
 
         function send() {
             socket.send(document.getElementById("message").value)
+            document.getElementById("message").value = "";
         }
     </script>
 </body>

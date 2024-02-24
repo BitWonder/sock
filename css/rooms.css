@@ -1,6 +1,7 @@
 :root {
     --accent-color: rgb(20, 134, 247);
     --normal-radius: 5px;
+    --soft-background: rgba(55,63,76, .2);
 }
 
 body {
@@ -13,8 +14,8 @@ body {
 header {
     width: 100%;
     border-bottom: 1px solid var(--accent-color);
-    font-size: 2vw;
-
+    font-size: 5vh;
+    height: 5vh;
     text-align: center;
 
     padding-top: 1%;
@@ -42,7 +43,7 @@ header {
     left: 1vw;
     width: calc(50% - 2vw);
     font-size: 2vw;
-
+    height: 5vh;
     border: 1px solid var(--accent-color);
     border-radius: 25px;
 
@@ -61,7 +62,7 @@ header {
     right: 1vw;
     width: calc(50% - 2vw);
     font-size: 2vw;
-
+    height: 5vh;
     border: 1px solid var(--accent-color);
     border-radius: 25px;
 
@@ -76,9 +77,33 @@ header {
 
 main {
     width: 90%;
-    height: 80%;
-    border: 1px solid black;
-    padding: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5vh;
+
+    height: 78vh;
 
     overflow: scroll;
+    overflow-x: auto;
+}
+
+.room {
+    padding: 1%;
+    border: 1px solid var(--accent-color);
+    border-radius: var(--normal-radius);
+    transition: all .2s;
+}
+
+.room:hover {
+    background-color: var(--soft-background);
+}
+
+.room:hover::after {
+    content: ">";
+    color: black;
+    float: right;
+}
+
+.room:focus {
+    border: 3px solid var(--accent-color);
 }
