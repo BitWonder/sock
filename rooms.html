@@ -12,34 +12,58 @@
     <input type="button" value="New Room" id="new">
     <input type="button" value="Join Room" id="join">
     <script>
-        let socket = new WebSocket (
-            `wss://${window.location.host}/rooms`
-        );
-        console.log("Getting Rooms")
+        function rooms() {
+            let socket = new WebSocket (
+                `wss://${window.location.host}/rooms`
+            );
+            console.log("Getting Rooms")
 
-        socket.onopen = () => {
-            socket.send(localStorage.getItem("username"));
-            console.log("Sending Username")
-        }
-
-        socket.onmessage = (message) => {
-            let rooms = JSON.parse(message.data);
-            console.log("Rooms: " + rooms)
-            if (rooms.length == 0) {
-                let e = document.createElement("p");
-                e.innerText = "You currently have no Chat Rooms avaible :(... \nTo Make a new room press New Room.\nTo Join a New Room, click New Room then input the room name";
-                document.getElementById("room_list").append(e);
-            } else {
-                rooms.forEach(room => {
-                    let e = document.createElement("p");
-                    e.innerText = room;
-                    document.getElementById("room_list").append(e);
-                })
+            socket.onopen = () => {
+                socket.send(localStorage.getItem("username"));
+                console.log("Sending Username")
             }
-            socket.close();
+
+            socket.onmessage = (message) => {
+                let rooms = JSON.parse(message.data);
+                console.log("Rooms: " + rooms)
+                if (rooms.length == 0) {
+                    let e = document.createElement("p");
+                    e.innerText = "You currently have no Chat Rooms avaible :(\nTo Make a new room press New Room.\nTo Join a New Room, click New Room then input the room name";
+                    document.getElementById("room_list").append(e);
+                } else {
+                    rooms.forEach(room => {
+                        let e = document.createElement("p");
+                        e.innerText = room;
+                        document.getElementById("room_list").append(e);
+                    })
+                }
+                socket.close();
+            }
         }
+
+        rooms()
 
         document.getElementById("welcome").innerText = "Welcome " + localStorage.getItem("username") + "!";
+
+        function new_room() {
+            let input = window.prompt("New Room Name");
+            let socket = new WebSocket (
+                `wss://${window.location.host}/new_room`
+            );
+
+            socket.onopen = () => {
+                socket.send(JSON.stringify({
+                    username: localStorage.getItem("username"),
+                    room: input
+                }))
+            }
+
+            socket.onmessage = (message) => {
+                alert(message.data);
+                socket.close()
+                rooms();
+            }
+        }
     </script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
-import XMLHttpRequest from "https://deno.land/x/xmlhttprequest_deno@v0.0.2/mod.js";
 
 // put a room with a key in here that then holds the clients
 const rooms = new Map();
@@ -47,6 +46,23 @@ router.get("/rooms", async (ctx) => {
     let rooms = JSON.stringify(users.get(message.data).rooms);
     console.log("Room request from" + message.data + "\n sending: " + rooms)
     socket.send(rooms);
+  }
+})
+
+router.get("/new_room", async (ctx) => {
+  const socket = await ctx.upgrade();
+  socket.onmessage = (message) => {
+    let make = JSON.parse(message.data);
+    if (rooms.has(make.room)) {
+      socket.send("Room Has Already Been Made!");
+    } else {
+      rooms.set(make.room, [])
+      let password = users.get(make.username).password;
+      let rooms = users.get(make.username).rooms
+      rooms.append(make.room)
+      users.set(make.username, new User(password, rooms))
+      socket.send("Room Made!");
+    }
   }
 })
 
