@@ -113,7 +113,7 @@ router.get("/chat", async (ctx) => {
     }
     console.log(current_list);
     current_list.push({ username: username, socket: socket });
-    rooms.set("rooms", current_list);
+    rooms.set(room, current_list);
     for (let client of rooms.get(room)) {
       client.socket.send(
         JSON.stringify({
