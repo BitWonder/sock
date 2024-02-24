@@ -10,7 +10,7 @@
     <header id="welcome"></header>
     <main id="room_list"></main>
     <input type="button" value="New Room" id="new" onclick="new_room()">
-    <input type="button" value="Join Room" id="join">
+    <input type="button" value="Join Room" id="join" onclick="join_room()">
     <script>
         function rooms() {
             let socket = new WebSocket (
