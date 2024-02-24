@@ -25,7 +25,7 @@
         socket.onmessage = (message) => {
             let rooms = JSON.parse(message.data);
             console.log("Rooms: " + rooms)
-            if (length(rooms) == 0) {
+            if (rooms.length == 0) {
                 let e = document.createElement("p");
                 e.innerText = "You currently have no Chat Rooms avaible :(... \nTo Make a new room press New Room.\nTo Join a New Room, click New Room then input the room name";
                 document.getElementById("room_list").append(e);
