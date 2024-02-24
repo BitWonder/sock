@@ -25,7 +25,7 @@
         document.getElementById("welcome").innerText = `${localStorage.getItem("room")}`
 
         const socket = new WebSocket(
-            `wss://${window.location.host}/chat?username=${localStorage.getItem("username")}&room=${localStorage.getItem("room")}}`
+            `wss://${window.location.host}/chat?username=${localStorage.getItem("username")}&room=${localStorage.getItem("room")}`
         )
 
         socket.onmessage = (message) => {
