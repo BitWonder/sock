@@ -22,6 +22,7 @@ function new_user(username, password) {
 }
 
 router.get("/login", async (ctx) => {
+  console.log(users);
   const socket = await ctx.upgrade();
 
   socket.onmessage = (message) => {
