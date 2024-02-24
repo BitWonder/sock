@@ -95,7 +95,7 @@ router.get("/chat", async (ctx) => {
   socket.onopen = () => {
     let current_list = rooms.get(room)
     current_list.push({username: username, socket: socket});
-    rooms.set("rooms", )
+    rooms.set("rooms", current_list)
     for (let client of rooms.get(room).socket) {
       client.send(JSON.stringify({
         type: "new-user",
