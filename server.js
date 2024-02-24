@@ -61,9 +61,9 @@ router.get("/new_room", async (ctx) => {
       console.log("Making Room")
       rooms.set(make.room, [])
       let password = users.get(make.username).password;
-      let rooms = users.get(make.username).rooms
-      rooms.append(make.room)
-      users.set(make.username, new User(password, rooms))
+      let rooms_of_user_list = users.get(make.username).rooms
+      rooms_of_user_list.append(make.room)
+      users.set(make.username, new User(password, rooms_of_user_list))
       socket.send("Room Made!");
     }
   }
