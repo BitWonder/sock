@@ -52,6 +52,9 @@
         }
 
         function send() {
+            if (document.getElementById("image").src == "./images/add-image.png") {
+                document.getElementById("image").src = "";
+            }
             socket.send(JSON.stringify({
                 message: document.getElementById("message").value,
                 image: document.getElementById("image").src

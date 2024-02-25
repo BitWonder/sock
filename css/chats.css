@@ -8,6 +8,10 @@ header {
     top: 0;
 }
 
+header h1 {
+    -webkit-text-stroke: 1px white;
+}
+
 main {
     padding-left: 3%;
     padding-right: 3%;
@@ -53,6 +57,7 @@ main {
     gap: 1vw;
     border-top: 1px solid rgb(20, 134, 247); 
     width: 100vw;
+    background-color: white;
 }
 
 #foot * {
