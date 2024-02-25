@@ -19,7 +19,7 @@
     <main id="chat"></main>
     
     <div id="foot">
-        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image" class="no_image"></label><input type="file" onchange="previewFile()" id="load"/><input type="button" value="Send" onclick="send()" id="send">
+        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image"></label><input type="file" onchange="previewFile()" id="load"/><input type="button" value="Send" onclick="send()" id="send">
     </div>
 
     <script>
@@ -52,8 +52,10 @@
         }
 
         function send() {
-            if (document.getElementById("image").classList.contains("no_image")) {
-                document.getElementById("image").src = "";
+            console.log(document.getElementById("image").src);
+            console.log(`${window.location.host}/images/add-image.png`)
+            if (document.getElementById("image").src == `${window.location.host}/images/add-image.png`) {
+                console.log("True")
             }
             socket.send(JSON.stringify({
                 message: document.getElementById("message").value,
