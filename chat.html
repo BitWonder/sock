@@ -19,7 +19,7 @@
     <main id="chat"></main>
     
     <div id="foot">
-        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image"></label><input type="file" onchange="previewFile()" id="load"/><input type="button" value="Send" onclick="send()" id="send">
+        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image" class="no_image"></label><input type="file" onchange="previewFile()" id="load"/><input type="button" value="Send" onclick="send()" id="send">
     </div>
 
     <script>
@@ -52,7 +52,7 @@
         }
 
         function send() {
-            if (document.getElementById("image").src == "./images/add-image.png") {
+            if (document.getElementById("image").classList.contains("no_image")) {
                 document.getElementById("image").src = "";
             }
             socket.send(JSON.stringify({
@@ -61,6 +61,7 @@
             }))
             document.getElementById("message").value = "";
             document.getElementById("image").src = "./images/add-image.png";
+            preview.classList.add("no_image");
         }
 
         function previewFile() {
@@ -80,6 +81,8 @@
             if (file) {
               reader.readAsDataURL(file);
             }
+
+            preview.classList.remove("no_image");
         }
     </script>
 </body>
