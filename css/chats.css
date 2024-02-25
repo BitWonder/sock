@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+}
+
+header {
+    text-align: center
+}
+
+main {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.new {
+    background-color: lightgreen;
+}
+
+.message {
+    background-color: lightgray;
+}
+
+.left {
+    background-color: lightcoral;
+}
+
+.chat {
+    border-radius: 25px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+}
+
+.chat h2 {
+    margin: 0;
+}
+
+.chat p {
+    margin: 0;
+}

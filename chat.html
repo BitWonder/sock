@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
+    <link rel="stylesheet" href="./css/chats.css">
 </head>
 <body>
 
@@ -16,10 +17,21 @@
     <hr>
 
     <main id="chat">
-
+        <div class="new chat">
+            <h2>Null:</h2><p>Say Hello To: Null</p>
+        </div>
+        <div class="message chat">
+            <h2>Null:</h2><p>Hi, peoples</p>
+        </div>
+        <div class="left chat">
+            <h2>Null:</h2><p>Say Bye To: Null</p>
+        </div>
     </main>
     
-    <input type="text" placeholder="Message" id="message"><input type="button" value="Send" onclick="send()">
+    <div id="foot">
+        <img src="" height="200" alt="Image preview" id="image"/>
+        <input type="text" placeholder="Message" id="message"><input type="file" onchange="previewFile()" /><input type="button" value="Send" onclick="send()">
+    </div>
 
     <script>
         alert("username: " + localStorage.getItem("username") + "\nroom: " + localStorage.getItem("room"))
@@ -33,7 +45,11 @@
         socket.onmessage = (message) => {
             let data = JSON.parse(message.data);
             let e = document.createElement("div");
-            e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p>`;
+            if (data.image != "") {
+                e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p><img src="${data.image}"/>`;
+            } else {
+                e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p>`;
+            }
             if (data.type == "new-user") {
                 e.classList.add("new")
             } else if (data.type == "left-user") {
@@ -41,12 +57,36 @@
             } else {
                 e.classList.add("message")
             }
+            e.classList.add("chat")
             document.getElementById("chat").append(e);
         }
 
         function send() {
-            socket.send(document.getElementById("message").value)
+            socket.send(JSON.stringify({
+                message: document.getElementById("message").value,
+                image: document.getElementById("image").src
+            }))
             document.getElementById("message").value = "";
+            document.getElementById("image").value = "";
+        }
+
+        function previewFile() {
+            const preview = document.querySelector("img");
+            const file = document.querySelector("input[type=file]").files[0];
+            const reader = new FileReader();
+          
+            reader.addEventListener(
+              "load",
+              () => {
+                // convert image file to base64 string
+                preview.src = reader.result;
+              },
+              false,
+            );
+          
+            if (file) {
+              reader.readAsDataURL(file);
+            }
         }
     </script>
 </body>

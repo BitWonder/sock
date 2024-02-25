@@ -26,14 +26,14 @@ header {
 
 @media screen and (max-width: 100svh) {
     header {
-        font-size: 5vw;
+        font-size: 7vw !important;
     }
     #new {
-        font-size: 5.5vw;
+        font-size: 5.5vw !important;
     }
     
     #join {
-        font-size: 5.5vw;
+        font-size: 5.5vw !important;
     }
 }
 

@@ -119,6 +119,7 @@ router.get("/chat", async (ctx) => {
         JSON.stringify({
           type: "new-user",
           username: room,
+          image: "",
           message: `Say Hello To: ${username}`,
         })
       );
@@ -133,7 +134,8 @@ router.get("/chat", async (ctx) => {
         JSON.stringify({
           type: "message",
           username: username,
-          message: message.data,
+          image: message.data.image,
+          message: message.data.message,
         })
       );
     }
@@ -146,6 +148,7 @@ router.get("/chat", async (ctx) => {
           JSON.stringify({
             type: "left-user",
             username: username,
+            image: "",
             message: `Say Bye To: ${username}`,
           })
         );
