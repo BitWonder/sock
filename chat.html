@@ -16,17 +16,7 @@
 
     <hr>
 
-    <main id="chat">
-        <div class="new chat">
-            <h2>Null:</h2><p>Say Hello To: Null</p>
-        </div>
-        <div class="message chat">
-            <h2>Null:</h2><p>Hi, peoples</p>
-        </div>
-        <div class="left chat">
-            <h2>Null:</h2><p>Say Bye To: Null</p>
-        </div>
-    </main>
+    <main id="chat"></main>
     
     <div id="foot">
         <img src="" height="200" alt="Image preview" id="image"/>
@@ -44,6 +34,7 @@
 
         socket.onmessage = (message) => {
             let data = JSON.parse(message.data);
+            console.log(data);
             let e = document.createElement("div");
             if (data.image != "") {
                 e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p><img src="${data.image}"/>`;

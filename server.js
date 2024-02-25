@@ -128,6 +128,7 @@ router.get("/chat", async (ctx) => {
   };
 
   socket.onmessage = (message) => {
+    console.log(message.data);
     console.log(database);
     for (let client of rooms.get(room)) {
       client.socket.send(
