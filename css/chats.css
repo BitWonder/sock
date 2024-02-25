@@ -15,7 +15,7 @@ header h1 {
 main {
     padding-left: 3%;
     padding-right: 3%;
-    height: 90vh;
+    margin-bottom: 10vh;
 }
 
 .new {
