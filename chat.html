@@ -54,8 +54,8 @@
         function send() {
             console.log(document.getElementById("image").src);
             console.log(`https://${window.location.host}/images/add-image.png`)
-            if (document.getElementById("image").src == `${window.location.host}/images/add-image.png`) {
-                console.log("True")
+            if (document.getElementById("image").src == `https://${window.location.host}/images/add-image.png`) {
+                document.getElementById("image").src = "";
             }
             socket.send(JSON.stringify({
                 message: document.getElementById("message").value,
