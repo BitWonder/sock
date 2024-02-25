@@ -55,12 +55,16 @@
             console.log(document.getElementById("image").src);
             console.log(`https://${window.location.host}/images/add-image.png`)
             if (document.getElementById("image").src == `https://${window.location.host}/images/add-image.png`) {
-                document.getElementById("image").src = "";
+                socket.send(JSON.stringify({
+                    message: document.getElementById("message").value,
+                    image: ""
+                }))
+            } else {
+                socket.send(JSON.stringify({
+                    message: document.getElementById("message").value,
+                    image: document.getElementById("image").src
+                }))
             }
-            socket.send(JSON.stringify({
-                message: document.getElementById("message").value,
-                image: document.getElementById("image").src
-            }))
             document.getElementById("message").value = "";
             document.getElementById("image").src = "./images/add-image.png";
             preview.classList.add("no_image");
