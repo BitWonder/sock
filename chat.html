@@ -20,7 +20,7 @@
     
     <div id="foot">
         <img src="" height="200" alt="Image preview" id="image"/>
-        <input type="text" placeholder="Message" id="message"><input type="file" onchange="previewFile()" /><input type="button" value="Send" onclick="send()">
+        <input type="text" placeholder="Message" id="message"><input type="file" onchange="previewFile()"/><input type="button" value="Send" onclick="send()">
     </div>
 
     <script>
@@ -62,7 +62,7 @@
         }
 
         function previewFile() {
-            const preview = document.querySelector("img");
+            const preview = document.getElementById("image");
             const file = document.querySelector("input[type=file]").files[0];
             const reader = new FileReader();
           
