@@ -129,16 +129,15 @@ router.get("/chat", async (ctx) => {
 
   socket.onmessage = (message) => {
     console.log(message.data);
-    console.log(message.data.image);
-    console.log(message.data.message);
+    let data = JSON.parse(message.data);
     console.log(database);
     for (let client of rooms.get(room)) {
       client.socket.send(
         JSON.stringify({
           type: "message",
           username: username,
-          image: message.data.image,
-          message: message.data.message,
+          image: data.image,
+          message: data.message,
         })
       );
     }
