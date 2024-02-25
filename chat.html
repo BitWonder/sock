@@ -12,15 +12,14 @@
         <h1 id="welcome" onclick="window.location.href = './rooms.html';">
 
         </h1>
-    </header>
 
-    <hr>
+        <hr>
+    </header>
 
     <main id="chat"></main>
     
     <div id="foot">
-        <img src="" height="200" alt="Image preview" id="image"/>
-        <input type="text" placeholder="Message" id="message"><input type="file" onchange="previewFile()"/><input type="button" value="Send" onclick="send()">
+        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image"></label><input type="file" onchange="previewFile()" id="load"/><input type="button" value="Send" onclick="send()" id="send">
     </div>
 
     <script>
@@ -58,7 +57,7 @@
                 image: document.getElementById("image").src
             }))
             document.getElementById("message").value = "";
-            document.getElementById("image").src = "";
+            document.getElementById("image").src = "./images/add-image.png";
         }
 
         function previewFile() {
