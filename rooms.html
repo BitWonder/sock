@@ -34,7 +34,6 @@
                     rooms.forEach(room => {
                         let e = document.createElement("div");
                         e.innerHTML = `<p class='room' onclick="go_to('${room}')">${room}</p><img src='./images/delete.png' alt='delete room' class='delete' onclick="delete_room('${room}')">`;
-                        e.classList.add("room")
                         document.getElementById("room_list").append(e);
                     })
                 }
@@ -89,7 +88,6 @@
         }
 
         function delete_room(room) {
-            window.event.stopPropagation();
             let input = room;
             let socket = new WebSocket (
                 `wss://${window.location.host}/delete_room`
