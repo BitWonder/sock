@@ -110,4 +110,5 @@ main {
 
 .delete {
     float: right;
+    height: 100%;
 }
