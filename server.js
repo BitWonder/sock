@@ -100,6 +100,28 @@ router.get("/join_room", async (ctx) => {
   };
 });
 
+router.get("/delete_room", async (ctx) => {
+  const socket = await ctx.upgrade();
+  socket.onmessage = async (message) => {
+    let make = JSON.parse(message.data);
+    console.log(make);
+    console.log("Delete Room");
+    let user = await database.get([make.username]);
+    let password = user.value.password;
+    let rooms_of_user_list = user.value.rooms;
+    if (!rooms_of_user_list) {
+      rooms_of_user_list = []
+    }
+    let index = rooms_of_user_list.indexOf(make.room);
+    if (index > -1) { // only splice array when item is found
+      array.splice(index, 1); // 2nd parameter means remove one item only
+    }
+    await database.set([make.username], new User(password, rooms_of_user_list));
+    socket.send("Room Deleted!");
+    console.log(database);
+  }
+});
+
 router.get("/chat", async (ctx) => {
   const socket = await ctx.upgrade();
   const username = ctx.request.url.searchParams.get("username");

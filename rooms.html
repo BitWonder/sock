@@ -33,7 +33,7 @@
                 } else {
                     rooms.forEach(room => {
                         let e = document.createElement("p");
-                        e.innerText = room;
+                        e.innerHTML = `${room}<img src='./images/delete.png' alt='delete room' class='delete' onclick='delete_room{${room}}'>`;
                         e.classList.add("room")
                         e.setAttribute("onclick", `go_to('${room}')`);
                         document.getElementById("room_list").append(e);
@@ -72,6 +72,27 @@
             let input = window.prompt("Room Name");
             let socket = new WebSocket (
                 `wss://${window.location.host}/join_room`
+            );
+
+            socket.onopen = () => {
+                socket.send(JSON.stringify({
+                    username: localStorage.getItem("username"),
+                    room: input
+                }))
+            }
+
+            socket.onmessage = async (message) => {
+                alert(message.data);
+                await socket.close()
+                document.getElementById("room_list").innerHTML = "";
+                rooms();
+            }
+        }
+
+        function delete_room(room) {
+            let input = room;
+            let socket = new WebSocket (
+                `wss://${window.location.host}/delete_room`
             );
 
             socket.onopen = () => {
