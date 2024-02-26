@@ -45,6 +45,12 @@ main {
     margin-top: 2%;
     max-height: 200vh;
     overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.chat::-webkit-scrollbar {
+    display: none;
 }
 
 .chat h2 {
