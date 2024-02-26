@@ -117,6 +117,7 @@ div:has(.room) {
     float: right;
     height: 1.5em;
     margin-top: -0.25em;
+    place-content: center;
 }
 
 .delete:hover {
