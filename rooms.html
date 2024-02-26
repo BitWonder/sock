@@ -52,6 +52,9 @@
             );
 
             socket.onopen = () => {
+                if (input == null) {
+                    return
+                }
                 socket.send(JSON.stringify({
                     username: localStorage.getItem("username"),
                     room: input
@@ -73,6 +76,9 @@
             );
 
             socket.onopen = () => {
+                if (input == null) {
+                    return
+                }
                 socket.send(JSON.stringify({
                     username: localStorage.getItem("username"),
                     room: input
