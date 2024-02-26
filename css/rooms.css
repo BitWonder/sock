@@ -88,8 +88,8 @@ main {
 }
 
 div:has(.room) {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto 1em;
 }
 
 .room {
