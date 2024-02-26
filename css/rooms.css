@@ -89,7 +89,8 @@ main {
 
 div:has(.room) {
     display: grid;
-    grid-template-columns: calc(100% - 2em) 2em;
+    grid-template-columns: calc(100% - 4em) 2em;
+    gap: 2em;
     justify-content: center;
     align-items: center;
 }
