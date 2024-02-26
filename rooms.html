@@ -12,9 +12,6 @@
     <input type="button" value="New Room" id="new" onclick="new_room()">
     <input type="button" value="Join Room" id="join" onclick="join_room()">
     <script>
-        window.event.cancelBubble = true
-        window.event.stopPropagation();
-
         function rooms() {
             let socket = new WebSocket (
                 `wss://${window.location.host}/rooms`
