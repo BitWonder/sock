@@ -28,12 +28,12 @@
                 console.log("Rooms: " + rooms)
                 if (rooms.length == 0) {
                     let e = document.createElement("p");
-                    e.innerText = "You currently have no Chat Rooms avaible :(\nTo Make a new room press New Room.\nTo Join a New Room, click New Room then input the room name";
+                    e.innerText = "You currently have no Chat Rooms available :(\nTo Make a new room press New Room.\nTo Join a New Room, click New Room then input the room name\nCollin Rawson Apologizes";
                     document.getElementById("room_list").append(e);
                 } else {
                     rooms.forEach(room => {
                         let e = document.createElement("p");
-                        e.innerHTML = `${room}<img src='./images/delete.png' alt='delete room' class='delete' onclick='delete_room{${room}}'>`;
+                        e.innerHTML = `${room}<img src='./images/delete.png' alt='delete room' class='delete' onclick='delete_room()"${room}")'>`;
                         e.classList.add("room")
                         e.setAttribute("onclick", `go_to('${room}')`);
                         document.getElementById("room_list").append(e);
@@ -90,6 +90,10 @@
         }
 
         function delete_room(room) {
+            if (!e) var e = window.event;
+            e.cancelBubble = true;
+            if (e.stopPropagation) e.stopPropagation();
+            
             let input = room;
             let socket = new WebSocket (
                 `wss://${window.location.host}/delete_room`

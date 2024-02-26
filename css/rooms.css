@@ -116,4 +116,5 @@ main {
 
 .delete:hover {
     border: 1px solid black;
+    border-radius: 10px;
 }
