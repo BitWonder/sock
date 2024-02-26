@@ -44,6 +44,7 @@ main {
     flex-direction: column;
     margin-top: 2%;
     max-height: 200vh;
+    overflow: auto;
 }
 
 .chat h2 {
