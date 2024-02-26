@@ -109,12 +109,9 @@ router.get("/delete_room", async (ctx) => {
     let user = await database.get([make.username]);
     let password = user.value.password;
     let rooms_of_user_list = user.value.rooms;
-    if (!rooms_of_user_list) {
-      rooms_of_user_list = []
-    }
     let index = rooms_of_user_list.indexOf(make.room);
     if (index > -1) { // only splice array when item is found
-      array.splice(index, 1); // 2nd parameter means remove one item only
+      rooms_of_user_list.splice(index, 1); // 2nd parameter means remove one item only
     }
     await database.set([make.username], new User(password, rooms_of_user_list));
     socket.send("Room Deleted!");
