@@ -87,6 +87,11 @@ main {
     overflow-x: auto;
 }
 
+div:has(.room) {
+    display: flex;
+    flex-direction: row;
+}
+
 .room {
     padding: 1%;
     border: 1px solid var(--accent-color);
@@ -115,6 +120,6 @@ main {
 }
 
 .delete:hover {
-    border: 1px solid black;
+    border: 1px solid rgba(0,0,0,.5);
     border-radius: 10px;
 }
