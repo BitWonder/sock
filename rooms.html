@@ -12,6 +12,9 @@
     <input type="button" value="New Room" id="new" onclick="new_room()">
     <input type="button" value="Join Room" id="join" onclick="join_room()">
     <script>
+        window.event.cancelBubble = true
+        window.event.stopPropagation();
+
         function rooms() {
             let socket = new WebSocket (
                 `wss://${window.location.host}/rooms`
@@ -90,10 +93,7 @@
         }
 
         function delete_room(room) {
-            if (!e) var e = window.event;
-            e.cancelBubble = true;
-            if (e.stopPropagation) e.stopPropagation();
-            
+            window.event.stopPropagation();
             let input = room;
             let socket = new WebSocket (
                 `wss://${window.location.host}/delete_room`
