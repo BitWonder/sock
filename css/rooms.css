@@ -110,5 +110,10 @@ main {
 
 .delete {
     float: right;
-    height: 100%;
+    height: 1.5em;
+    margin-top: -0.25em;
+}
+
+.delete:hover {
+    border: 1px solid black;
 }
