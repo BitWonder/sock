@@ -32,8 +32,8 @@
                     document.getElementById("room_list").append(e);
                 } else {
                     rooms.forEach(room => {
-                        let e = document.createElement("p");
-                        e.innerHTML = `${room}<img src='./images/delete.png' alt='delete room' class='delete' onclick='delete_room()"${room}")'>`;
+                        let e = document.createElement("div");
+                        e.innerHTML = `<p class="room" onclick="go_to("${room}")">${room}<p><img src='./images/delete.png' alt='delete room' class='delete' onclick='delete_room()"${room}")'>`;
                         e.classList.add("room")
                         e.setAttribute("onclick", `go_to('${room}')`);
                         document.getElementById("room_list").append(e);
