@@ -23,7 +23,7 @@ main {
 }
 
 .new {
-    background-color: lightgreen;
+    background-color: #90ee90;
 }
 
 .message {
@@ -31,7 +31,7 @@ main {
 }
 
 .gone {
-    background-color: lightcoral;
+    background-color: #f08080;
 }
 
 .chat {
