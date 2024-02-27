@@ -168,7 +168,7 @@ router.get("/chat", async (ctx) => {
   socket.onclose = () => {
     console.log(`${username} has left ${room}`)
     let users = rooms.get(room)
-    const index = users.indexOf(username);
+    const index = users.indexOf({username: username, socket: socket});
     if (index > -1) { // only splice array when item is found
       users.splice(index, 1); // 2nd parameter means remove one item only
     }
