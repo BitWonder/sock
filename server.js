@@ -126,6 +126,9 @@ router.get("/chat", async (ctx) => {
   console.log("Username: " + username);
   console.log("Room: " + room);
   socket.onopen = () => {
+    if (!rooms.has(room)) {
+      rooms.set(room, []);
+    }
     let current_list = rooms.get(room);
     if (!current_list) {
       current_list = []

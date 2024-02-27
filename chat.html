@@ -9,7 +9,7 @@
 <body>
 
     <header>
-        <h1 id="welcome" onclick="window.location.href = './rooms.html';">
+        <h1 id="welcome" onclick="leave()">
 
         </h1>
 
@@ -88,6 +88,11 @@
             }
 
             preview.classList.remove("no_image");
+        }
+
+        function leave() {
+            socket.close()
+            window.location.href = './rooms.html';
         }
     </script>
 </body>
