@@ -94,6 +94,10 @@
         }
 
         function delete_room(room) {
+            if (!confirm("Delete Room?")) {
+                return;
+            }
+
             let input = room;
             let socket = new WebSocket (
                 `wss://${window.location.host}/delete_room`

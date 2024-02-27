@@ -23,8 +23,6 @@
     </div>
 
     <script>
-        alert("username: " + localStorage.getItem("username") + "\nroom: " + localStorage.getItem("room"))
-
         document.getElementById("welcome").innerText = `${localStorage.getItem("room")}`
 
         const socket = new WebSocket(
