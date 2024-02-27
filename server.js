@@ -178,7 +178,7 @@ router.get("/chat", async (ctx) => {
       client.socket.send(
           JSON.stringify({
           type: "left-user",
-          username: username,
+          username: `${room}`,
           image: "",
           message: `Say Bye To: ${username}`,
         })
