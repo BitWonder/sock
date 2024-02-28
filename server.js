@@ -3,7 +3,7 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 // put a room with a key in here that then holds the clients
 const database = await Deno.openKv();
 
-if (database.get("rooms") == null) {
+if (database.get(["rooms"]) == null) {
   database.set("rooms", [])
 }
 
@@ -61,7 +61,7 @@ router.get("/new_room", async (ctx) => {
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
     console.log(make);
-    if (database.get("rooms").includes(make.room)) {
+    if (database.get(["rooms"]).includes(make.room)) {
       console.log("Room Already Make");
       socket.send("Room Has Already Been Made!");
       return
@@ -77,7 +77,7 @@ router.get("/new_room", async (ctx) => {
       await database.set([make.username], new User(password, rooms_of_user_list));
       socket.send("Room Made!");
       console.log(database);
-      database.get("rooms").push(make.room)
+      database.get(["rooms"]).push(make.room)
     }
   };
 });
@@ -87,7 +87,7 @@ router.get("/join_room", async (ctx) => {
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
     console.log(make);
-    if (!database.get("rooms").includes(make.room)) {
+    if (!database.get(["rooms"]).includes(make.room)) {
       console.log("Could Not Find Room");
       socket.send("Room Does Not Exist");
     } else {
@@ -133,17 +133,17 @@ router.get("/chat", async (ctx) => {
   console.log("Room: " + room);
   socket.onopen = () => {
     if (!rooms.has(room)) {
-      if (database.get(`chats_rooms_${room}`) != null) {
+      if (database.get([`chats_rooms_${room}`]) != null) {
         rooms.set(room, database.get(`chats_rooms_${room}`))
       }
       rooms.set(room, []);
-      database.set(`chats_rooms_${room}`, [{username: username, socket: socket}])
+      database.set([`chats_rooms_${room}`], [{username: username, socket: socket}])
     }
     let current_list = rooms.get(room);
     console.log(current_list);
     current_list.push({ username: username, socket: socket });
     rooms.set(room, current_list);
-    database.set(`chats_rooms_${room}`, current_list)
+    database.set([`chats_rooms_${room}`], current_list)
     for (let client of rooms.get(room)) {
       client.socket.send(
         JSON.stringify({
@@ -181,7 +181,7 @@ router.get("/chat", async (ctx) => {
     if (index > -1) {
       users.splice(index, 1);
     }
-    database.set(`chats_rooms_${room}`, users)
+    database.set([`chats_rooms_${room}`], users)
     console.log(rooms.get(room));
     for (let client of users) {
       client.socket.send(
