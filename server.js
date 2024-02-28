@@ -3,6 +3,10 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 // put a room with a key in here that then holds the clients
 const database = await Deno.openKv();
 
+if (!database.has("rooms")) {
+  database.set("rooms", [])
+}
+
 const rooms = new Map();
 
 const app = new Application();
@@ -57,9 +61,10 @@ router.get("/new_room", async (ctx) => {
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
     console.log(make);
-    if (rooms.has(make.room)) {
+    if (database.get("rooms").includes(make.room)) {
       console.log("Room Already Make");
       socket.send("Room Has Already Been Made!");
+      return
     } else {
       console.log("Making Room");
       let user = await database.get([make.username]);
@@ -72,6 +77,7 @@ router.get("/new_room", async (ctx) => {
       await database.set([make.username], new User(password, rooms_of_user_list));
       socket.send("Room Made!");
       console.log(database);
+      database.get("rooms").push(make.room)
     }
   };
 });
@@ -81,7 +87,7 @@ router.get("/join_room", async (ctx) => {
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
     console.log(make);
-    if (!rooms.has(make.room)) {
+    if (!database.get("rooms").includes(make.room)) {
       console.log("Could Not Find Room");
       socket.send("Room Does Not Exist");
     } else {
