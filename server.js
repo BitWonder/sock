@@ -134,7 +134,7 @@ router.get("/chat", async (ctx) => {
   socket.onopen = () => {
     if (!rooms.has(room)) {
       if (database.get([`chats_rooms_${room}`]) != null) {
-        rooms.set(room, database.get(`chats_rooms_${room}`))
+        rooms.set(room, database.get([`chats_rooms_${room}`]))
       }
       rooms.set(room, []);
       database.set([`chats_rooms_${room}`], [{username: username, socket: socket}])
