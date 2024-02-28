@@ -3,7 +3,7 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 // put a room with a key in here that then holds the clients
 const database = await Deno.openKv();
 
-if (!database.has("rooms")) {
+if (database.get("rooms") == null) {
   database.set("rooms", [])
 }
 
@@ -133,15 +133,17 @@ router.get("/chat", async (ctx) => {
   console.log("Room: " + room);
   socket.onopen = () => {
     if (!rooms.has(room)) {
+      if (database.get(`chats_rooms_${room}`) != null) {
+        rooms.set(room, database.get(`chats_rooms_${room}`))
+      }
       rooms.set(room, []);
+      database.set(`chats_rooms_${room}`, [{username: username, socket: socket}])
     }
     let current_list = rooms.get(room);
-    if (!current_list) {
-      current_list = []
-    }
     console.log(current_list);
     current_list.push({ username: username, socket: socket });
     rooms.set(room, current_list);
+    database.set(`chats_rooms_${room}`, current_list)
     for (let client of rooms.get(room)) {
       client.socket.send(
         JSON.stringify({
@@ -179,6 +181,7 @@ router.get("/chat", async (ctx) => {
     if (index > -1) {
       users.splice(index, 1);
     }
+    database.set(`chats_rooms_${room}`, users)
     console.log(rooms.get(room));
     for (let client of users) {
       client.socket.send(
