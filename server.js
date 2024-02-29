@@ -61,33 +61,53 @@ router.get("/rooms", async (ctx) => {
 
 router.get("/new_room", async (ctx) => {
   const socket = await ctx.upgrade();
+
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
-    let x = await database.get(["rooms"]).value
-    if (x == 'undefined') {
-      await database.set(["rooms"], [])
-      x = await database.get(["rooms"]).value
-    }
-    console.log(make);
-    console.log(x)
-    if (x.includes(make.room)) {
-      console.log("Room Already Make");
-      socket.send("Room Has Already Been Made!");
-      return
-    } else {
-      console.log("Making Room");
+
+    // Upgrade socket
+    try {
+      // Parse JSON
       let user = await database.get([make.username]);
-      let password = user.value.password;
-      let rooms_of_user_list = user.value.rooms;
-      if (!rooms_of_user_list) {
-        rooms_of_user_list = []
+
+      // Get database array from rooms
+      let roomsData = await database.get(["rooms"]);
+      let rooms = roomsData.value;
+
+      // If no array exists, make new array
+      if (!Array.isArray(rooms)) {
+        rooms = [];
       }
+
+      // If room exists, send message and exit function
+      if (rooms.includes(make.room)) {
+        console.log("Room Already Exists");
+        socket.send("Room Has Already Been Made!");
+        return;
+      }
+
+      // Get user data from database by username
+      let password = user.value.password;
+      let rooms_of_user_list = user.value.rooms || [];
+
+      // Append the room to the user's array of rooms
       rooms_of_user_list.push(make.room);
+
+      // Update user content in the database
       await database.set([make.username], new User(password, rooms_of_user_list));
+
+      // Add room to database rooms
+      rooms.push(make.room);
+
+      // Update database with the updated rooms array
+      await database.set(["rooms"], rooms);
+
+      // Send confirmation message
       socket.send("Room Made!");
-      console.log(database);
-      x.push(make.room)
-      await database.set(["rooms"], x)
+      console.log("Room Made:", make.room);
+    } catch (error) {
+      console.error("Error occurred while creating room:", error);
+      // Handle error
     }
   };
 });
