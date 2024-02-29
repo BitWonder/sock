@@ -116,22 +116,36 @@ router.get("/join_room", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
-    console.log(make);
-    if (!database.get(["rooms"]).includes(make.room)) {
-      console.log("Could Not Find Room");
-      socket.send("Room Does Not Exist");
-    } else {
-      console.log("Joining Room");
+
+    try {
+      // Check if the room exists in the database
+      let roomsData = await database.get(["rooms"]);
+      let rooms = roomsData.value;
+
+      // If the room doesn't exist, send a message and fail
+      if (!Array.isArray(rooms) || !rooms.includes(make.room)) {
+        console.log("Could Not Find Room");
+        socket.send("Room Does Not Exist");
+        return;
+      }
+
+      // Joining Room
       let user = await database.get([make.username]);
       let password = user.value.password;
-      let rooms_of_user_list = user.value.rooms;
-      if (!rooms_of_user_list) {
-        rooms_of_user_list = []
-      }
+      let rooms_of_user_list = user.value.rooms || [];
+
+      // Append the room to the user's rooms list
       rooms_of_user_list.push(make.room);
+
+      // Update the user's data in the database
       await database.set([make.username], new User(password, rooms_of_user_list));
+
+      // Send confirmation message
       socket.send("Joined Room Successfully!");
-      console.log(database);
+      console.log("Joined Room Successfully:", make.room);
+    } catch (error) {
+      console.error("Error occurred while joining room:", error);
+      // Handle error
     }
   };
 });
