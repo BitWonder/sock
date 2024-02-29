@@ -3,7 +3,7 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 // put a room with a key in here that then holds the clients
 const database = await Deno.openKv();
 
-if (database.get(["rooms"]) == null) {
+if (database.get(["rooms"]).value == null) {
   database.set(["rooms"], [])
 }
 
