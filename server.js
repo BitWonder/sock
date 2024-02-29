@@ -6,6 +6,9 @@ const database = await Deno.openKv();
 if (database.get(["rooms"]).value == null) {
   database.set(["rooms"], [])
 }
+if (database.get(["rooms"]).value == undefined) {
+  database.set(["rooms"], [])
+}
 
 const rooms = new Map();
 
@@ -80,7 +83,7 @@ router.get("/new_room", async (ctx) => {
       socket.send("Room Made!");
       console.log(database);
       x.push(make.room)
-      database.set(["rooms"],x)
+      database.set(["rooms"], x)
     }
   };
 });
