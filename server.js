@@ -60,7 +60,7 @@ router.get("/new_room", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
-    let x = database.get(["rooms"])
+    let x = await database.get(["rooms"])
     console.log(make);
     console.log(x)
     if (x.includes(make.room)) {
