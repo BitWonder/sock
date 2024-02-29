@@ -6,7 +6,7 @@ const database = await Deno.openKv();
 if (database.get(["rooms"]).value == null) {
   database.set(["rooms"], [])
 }
-if (database.get(["rooms"]).value == undefined) {
+if (database.get(["rooms"]).value == 'undefined') {
   database.set(["rooms"], [])
 }
 
@@ -64,6 +64,10 @@ router.get("/new_room", async (ctx) => {
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
     let x = await database.get(["rooms"]).value
+    if (x == 'undefined') {
+      await database.set(["rooms"], [])
+      x = await database.get(["rooms"]).value
+    }
     console.log(make);
     console.log(x)
     if (x.includes(make.room)) {
@@ -83,7 +87,7 @@ router.get("/new_room", async (ctx) => {
       socket.send("Room Made!");
       console.log(database);
       x.push(make.room)
-      database.set(["rooms"], x)
+      await database.set(["rooms"], x)
     }
   };
 });
