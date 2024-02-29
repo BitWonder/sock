@@ -57,6 +57,15 @@
                 return;
             }
 
+            if (document.getElementById("message").value.includes("<style>")) {
+                alert("No changing my styles!")
+                return;
+            }
+
+            if (document.getElementById("message").value.includes("onclick") || document.getElementById("message").value.includes("onmouseover") || document.getElementById("message").value.includes("onmouseout") || document.getElementById("message").value.includes("onkeydown")) {
+                document.getElementById("message").value = '"' + document.getElementById("message").value + '"';
+            }
+
             console.log(document.getElementById("image").src);
             console.log(`https://${window.location.host}/images/add-image.png`)
             if (document.getElementById("image").src == `https://${window.location.host}/images/add-image.png`) {
