@@ -4,7 +4,7 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 const database = await Deno.openKv();
 
 if (database.get(["rooms"]) == null) {
-  database.set("rooms", [])
+  database.set(["rooms"], [])
 }
 
 const rooms = new Map();
