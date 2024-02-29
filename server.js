@@ -60,7 +60,7 @@ router.get("/new_room", async (ctx) => {
   const socket = await ctx.upgrade();
   socket.onmessage = async (message) => {
     let make = JSON.parse(message.data);
-    let x = await database.get(["rooms"])
+    let x = await database.get(["rooms"]).value
     console.log(make);
     console.log(x)
     if (x.includes(make.room)) {
@@ -79,7 +79,8 @@ router.get("/new_room", async (ctx) => {
       await database.set([make.username], new User(password, rooms_of_user_list));
       socket.send("Room Made!");
       console.log(database);
-      database.get(["rooms"]).push(make.room)
+      x.push(make.room)
+      database.set(["rooms"],x)
     }
   };
 });
