@@ -34,10 +34,17 @@
             let data = JSON.parse(message.data);
             console.log(data);
             let e = document.createElement("div");
+            let h = document.createElement("h1");
+            h.innerText = data.username;
+            let p = document.createElement("p");
+            p.innerText = data.message;
+            e.append(h)
+            e.append(p)
+            let i;
             if (data.image != "") {
-                e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p><img src="${data.image}"/>`;
-            } else {
-                e.innerHTML = `<h2>${data.username}:</h2><p>${data.message}</p>`;
+                i = document.createElement("img");
+                i.src = data.image;
+                e.append(i);
             }
             if (data.type == "new-user") {
                 e.classList.add("new")
@@ -60,10 +67,6 @@
             if (document.getElementById("message").value.includes("<style>")) {
                 alert("No changing my styles!")
                 return;
-            }
-
-            if (document.getElementById("message").value.includes("onclick") || document.getElementById("message").value.includes("onmouseover") || document.getElementById("message").value.includes("onmouseout") || document.getElementById("message").value.includes("onkeydown")) {
-                document.getElementById("message").value = '"' + document.getElementById("message").value + '"';
             }
 
             console.log(document.getElementById("image").src);
