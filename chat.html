@@ -19,9 +19,9 @@
 
     <main id="chat"></main>
     
-    <div id="foot">
-        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image"></label><input type="file" onchange="previewFile()" id="load"/><input type="button" value="Send" onclick="send()" id="send">
-    </div>
+    <form id="foot">
+        <input type="text" placeholder="Message" id="message"><label for="load"><img src="./images/add-image.png" id="image"></label><input type="file" onchange="previewFile()" id="load"/><input type="submit" value="Send" id="send">
+    </form>
 
     <script>
         document.getElementById("welcome").innerText = `${localStorage.getItem("room")}`
@@ -58,7 +58,9 @@
             window.scroll(0, document.body.scrollHeight);
         }
 
-        function send() {
+        document.getElementById("foot").onsubmit = function(event) {
+            event.preventDefault()
+
             if (document.getElementById("message").value == "" && document.getElementById("image").src == `https://${window.location.host}/images/add-image.png`) {
                 alert("Must have something to send!")
                 return;
